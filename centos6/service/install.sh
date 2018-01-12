@@ -285,8 +285,27 @@ if [ "$skip_hadoop" = "" ];then
                   expect "*]#*"
 EOF
 
-   #start剩余所有服务
+  #start剩余所有服务
   python start_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
 else
-  
+  python install_service.py $server_IP $cluster_name hosts.json
+  sleep 15
+
+  #判断astro是否已经安装完成
+  /usr/bin/expect <<-EOF
+  set timeout 100000
+  spawn ssh $astro_host
+                  expect "*]#*"
+            send "wget $baseurl/deploy_scripts/centos6/service/pg_db_astro.sh\n"
+                  expect "*]#*"
+            send "chmod 755 pg_db_astro.sh\n"
+                  expect "*]#*"
+            send "./pg_db_astro.sh\n"
+                  expect "*]#*"
+            send "rm -rf pg_db_astro.sh\n"
+                  expect "*]#*"
+EOF
+
+  #启动服务
+  python start_service.py $server_IP $cluster_name hosts.json
 fi
