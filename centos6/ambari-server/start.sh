@@ -143,7 +143,7 @@ echo "~~~~~~~~~~~inited centos ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #    ./hostname.sh ip.txt
 #    cat new_hostname >> /etc/hosts
 #    echo "~~~~~~~~~~~hostname success changed~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-#  else 
+#  else
 #    echo "~~~~~~~~~~~change hostname skipped~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 #fi
 
