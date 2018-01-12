@@ -8,7 +8,6 @@ function print_usage(){
   echo "     -server_IP <server_IP>         The IP of Ambari-Server"
   echo "     -cluster_name <name>           The name of cluster"
   echo "     -server_password <server_password>    The password of root on ambari-server"
-  echo "     -csv                           Choose the hosts that the component installed on, or take the defaults without the parameter"
   echo "     -skip_hadoop                   Do not install hadoop"
 }
 
@@ -17,7 +16,7 @@ http_port=81
 server_IP=""
 cluster_name=""
 server_password=""
-csv=""
+csv="csv"
 skip_hadoop=""
 
 while [[ $# -gt 0 ]]; do
@@ -34,29 +33,26 @@ done
 
 #根据../ambari-server/host文件内的行数判断journalnode_stat的值
 journalnode_stat=""
+if [ "$skip_hadoop" = "" ]; then
+  journalnode_hosts=`cat ../conf/hosts.csv | grep SUGO_JOURNALNODE | cut -d \, -f 3-`
+  arr=(${journalnode_hosts//,/ })
+  journalnode_num=0
+  for i in ${arr[@]}
+  do
+      journalnode_num=$[$journalnode_num + 1]
+  done
 
-if [ "$csv" = "" ];then
-    journalnode_num=`cat ../ambari-server/host | wc -l`
-else
-    journalnode_hosts=`cat ../conf/hosts.csv | grep SUGO_JOURNALNODE | cut -d \, -f 3-`
-    arr=(${journalnode_hosts//,/ })
-    journalnode_num=0
-    for i in ${arr[@]}
-    do
-        journalnode_num=$[$journalnode_num + 1]
-    done
+  i=0
+  while true;do
+    if [ $i -lt $journalnode_num ];then
+      journalnode_stat=$journalnode_stat"STARTED"
+  	i=$[$i+1]
+  	continue
+    else
+      break
+    fi
+  done
 fi
-
-i=0
-while true;do
-  if [ $i -lt $journalnode_num ];then
-    journalnode_stat=$journalnode_stat"STARTED"
-	i=$[$i+1]
-	continue
-  else
-    break
-  fi
-done
 
 baseurl=http://$server_IP:$http_port/sugo_yum
 
@@ -113,29 +109,27 @@ rm -rf host1 host2
 cd -
 #sort ../ambari-server/host > ../ambari-agent/host
 
-if [ "$csv" = "" ];then
-  cluster_host1=`cat ../ambari-agent/host | sed -n "1p" |awk '{print $2}'`
-  cluster_host2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
-  cluster_host3=`cat ../ambari-agent/host | sed -n "3p" |awk '{print $2}'`
+cluster_host1=`cat ../ambari-agent/host | sed -n "1p" |awk '{print $2}'`
+cluster_host2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
+cluster_host3=`cat ../ambari-agent/host | sed -n "3p" |awk '{print $2}'`
 
-  if [ "$skip_hadoop" = "" ]; then
-    sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_until_hdfs.json
-    sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_until_hdfs.json
-    sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_until_hdfs.json
+if [ "$skip_hadoop" = "" ]; then
+  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_until_hdfs.json
+  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_until_hdfs.json
+  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_until_hdfs.json
 
-    sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_after_hdfs.json
-    sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_after_hdfs.json
-    sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_after_hdfs.json
+  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_after_hdfs.json
+  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_after_hdfs.json
+  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_after_hdfs.json
 
-    sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
-    sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
-    sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
-  else
-    sed -i "s/test1.sugo.vm/${cluster_host1}/g" hosts_csv.json
-    sed -i "s/test2.sugo.vm/${cluster_host2}/g" hosts_csv.json
-    sed -i "s/test3.sugo.vm/${cluster_host3}/g" hosts_csv.json
-  fi
-fi
+  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
+  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
+  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
+else
+  sed -i "s/test1.sugo.vm/${cluster_host1}/g" hosts_csv.json
+  sed -i "s/test2.sugo.vm/${cluster_host2}/g" hosts_csv.json
+  sed -i "s/test3.sugo.vm/${cluster_host3}/g" hosts_csv.jsonfi
+
 
 #获取namenode及astro所在主机并替换astro和druid的配置项
 cd ../service/
@@ -149,12 +143,12 @@ else
   python get_host.py hosts_csv.json namenode_astro_host.txt
 fi
 
-
 astro_host=`cat namenode_astro_host.txt | grep "astro_host" | awk '{print $2}'`
 redis_host=`cat namenode_astro_host.txt | grep "redis_host" | awk '{print $2}'`
 postgres_host=`cat namenode_astro_host.txt | grep "postgres_host" | awk '{print $2}'`
 gateway_host=`cat namenode_astro_host.txt | grep "gateway_host" | awk '{print $2}'`
 
+#alter parameters
 rm -rf changed_configuration
 cp -r changed_configurations changed_configuration
 sed -i "s/test1.sugo.vm/${astro_host}/g" changed_configuration/astro-site.xml

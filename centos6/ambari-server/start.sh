@@ -199,9 +199,6 @@ fi
 #判断是通过csv格式自定义服务安装的位置还是按照默认安装服务
 rm -rf ../service/host_*
 cd ../conf/
-if [ "$csv" = "" ];then
-  cp host_* ../service/
-else
   if [ "skip_hadoop" = "" ];then
     python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
     cp hostbeforhdfs.json ../service/host_until_hdfs.json
@@ -217,7 +214,6 @@ else
       python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
     fi
   fi
-fi
 cd -
 
 #创建集群并安装服务
@@ -227,10 +223,6 @@ if [ $skip_cluster_services -eq 0 ]
     cd ../service
     echo `pwd`
     echo "http_port:$http_port, server_ip:$ambari_ip, cluster_name:$cluster_name, serverpassword:$server_password, baseurl:$baseurl"
-    if [ "$csv" = "" ];then
-        source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password
-    else
-        source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password -csv
-    fi
+    source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password
     cd -
 fi
