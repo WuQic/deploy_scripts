@@ -288,7 +288,7 @@ EOF
   #start剩余所有服务
   python start_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
 else
-  python install_service.py $server_IP $cluster_name hosts.json
+  python install_service.py $server_IP $cluster_name hosts_csv.json
   sleep 15
 
   #判断astro是否已经安装完成
@@ -307,5 +307,5 @@ else
 EOF
 
   #启动服务
-  python start_service.py $server_IP $cluster_name hosts.json
+  python start_service.py $server_IP $cluster_name hosts_csv.json
 fi
