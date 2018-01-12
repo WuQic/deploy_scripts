@@ -43,7 +43,7 @@ pw1=`cat ../ambari-server/$passwd_file | grep $namenode1 |awk '{print $1}'`
 pw2=`cat ../ambari-server/$passwd_file | grep $namenode2 |awk '{print $1}'`
 
 #配置namenode的hdfs用户之间的免密码登录
-./passwdless.sh $namenode1 $pw1 $namenode2 $pw2
+./passwdless.sh $namenode1 $namenode2
 
 #格式化namenode
 #1.格式化zkfc并启动namenode1节点的zkfc
@@ -52,8 +52,8 @@ set timeout 100000
 spawn ssh $namenode1
         expect {
         "*yes/no*" { send "yes\n"
-        expect "*assword:" { send "pw1\n" } }
-        "*assword:" { send "pw1\n" }
+        expect "*assword:" { send "$pw1\n" } }
+        "*assword:" { send "$pw1\n" }
         "*]#*" { send "\n"}
         "*]#*"
         }

@@ -3,11 +3,8 @@
 #ambari-server主机安装相关软件及http服务
 yum install -y wget ntp openssh-clients expect
 
-if [ ! -f ip.txt ]; then
-  passwd_file=host
-else
-  passwd_file=ip.txt
-fi
+passwd_file=host
+
 
 cat $passwd_file |while read line;
 do

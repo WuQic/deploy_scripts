@@ -1,9 +1,7 @@
 #!/bin/bash
 
 #NameNode1 = $1
-#passwd1 = $2
-#NameNode2 = $3
-#passwd2 = $4
+#NameNode2 = $2
 
 #Namenode1上hdfs用户生成ssh秘钥对,
 ssh $1 "yum install -y expect"
@@ -26,7 +24,7 @@ EOF
 ssh $3 "yum install -y expect"
 /usr/bin/expect <<-EOF
 set timeout 100000
-spawn ssh $3
+spawn ssh $2
 	expect "*~]#*" { send "su - hdfs\n"
 	expect "*~]\$*" { send "ssh-keygen -t rsa\n"
 		expect "*id_rsa*"
@@ -66,7 +64,7 @@ EOF
 #NameNode2赋予.ssh文件夹、文件权限，并验证免密码登录是否成功
 /usr/bin/expect <<-EOF
 set timeout 100000
-spawn ssh $3
+spawn ssh $2
 	expect "*~]#*" { send "chown -R hdfs:hdfs /home/hdfs/.ssh\n"
 		expect "*~]\#*"
 	send "su - hdfs\n"
@@ -87,7 +85,7 @@ set timeout 100000
 spawn ssh $1
 	expect "*~]#*" { send "su - hdfs\n"
 		expect "*~]\$*" 
-	send "ssh $3\n"
+	send "ssh $2\n"
 		expect  "*(yes/no)?"  
 	send "yes\n"
 		expect "*~]\$*"}

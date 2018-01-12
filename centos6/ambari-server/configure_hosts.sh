@@ -30,11 +30,7 @@ cat host >> /etc/hosts
 cp host host_old
 
 #分发本机hosts文件到其它主机
-if [ ! -f ip.txt ]; then
-  passwd_file=host
-else
-  passwd_file=ip.txt
-fi
+passwd_file=ip.txt
 
 cat $passwd_file | while read line;
 do

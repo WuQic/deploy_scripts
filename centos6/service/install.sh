@@ -269,5 +269,5 @@ spawn ssh $astro_host
                 expect "*]#*"
 EOF
 
- #启剩余所有服务
+ #start剩余所有服务
 python start_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
