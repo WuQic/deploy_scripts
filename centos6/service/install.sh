@@ -140,11 +140,16 @@ fi
 #获取namenode及astro所在主机并替换astro和druid的配置项
 cd ../service/
 rm -rf namenode_astro_host.txt
-python get_host.py host_until_hdfs.json namenode_astro_host.txt
-python get_host.py host_after_hdfs.json namenode_astro_host.txt
+if [ "$skip_hadoop" = "" ]; then
+  python get_host.py host_until_hdfs.json namenode_astro_host.txt
+  python get_host.py host_after_hdfs.json namenode_astro_host.txt
+  namenode1=`cat namenode_astro_host.txt | grep "namenode1" | awk '{print $2}'`
+  namenode2=`cat namenode_astro_host.txt | grep "namenode2" | awk '{print $2}'`
+else
+  python get_host.py hosts_csv.json namenode_astro_host.txt
+fi
 
-namenode1=`cat namenode_astro_host.txt | grep "namenode1" | awk '{print $2}'`
-namenode2=`cat namenode_astro_host.txt | grep "namenode2" | awk '{print $2}'`
+
 astro_host=`cat namenode_astro_host.txt | grep "astro_host" | awk '{print $2}'`
 redis_host=`cat namenode_astro_host.txt | grep "redis_host" | awk '{print $2}'`
 postgres_host=`cat namenode_astro_host.txt | grep "postgres_host" | awk '{print $2}'`
@@ -196,87 +201,92 @@ sleep 5
 #重启ambari
 #ambari-server restart
 
-#安装hdfs及之前的服务
-python install_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
-sleep 15 
 
-  #判断hdfs是否已经安装，如果没有则等待安装完成
-  hdfs_dir="/opt/apps/hadoop_sugo"
-  printf "waiting for hdfs to be installed" 
-  y=0
-  while [ ! -d "$hdfs_dir" ]
-  do
+if [ "$skip_hadoop" = "" ];then
+  #安装hdfs及之前的服务
+  python install_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
+  sleep 15
+
+    #判断hdfs是否已经安装，如果没有则等待安装完成
     hdfs_dir="/opt/apps/hadoop_sugo"
-    if [ ! -d "$hdfs_dir" ];then
-      sleep 3
-    y=$[$y+1]
-    if [ $y -lt 180 ];then
-        printf "."
-        continue
-    else
-        echo -e "\n==========Timeout==========\nThe installation of HDFS failed, please check the configurations and run start.sh again!"
-        exit 1
-    fi
-    else
-      break
-    fi
-  done
-  echo ""
-
- #启动hdfs及之前的服务
- echo "starting service postgres, redis, zookeeper and hdfs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
- python start_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
- sleep 10
- 
-  #判断所有journalnode是否都已经启动
-  printf "waiting for journalnode to start"
-  z=0
-  while true;do
-  curl -u admin:admin -H "X-Requested-By: ambari" -X GET "http://$server_IP:8080/api/v1/clusters/$cluster_name/components/?ServiceComponentInfo/category=SLAVE&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,&minimal_response=true&_=1499937079425" > slave.json
-  python slave.py slave.json > slave.txt
-  state=`sed ':a;N;$!ba;s/\n//g' slave.txt`
-    if [ "$state" = "$journalnode_stat" ];then
-      # hdfs初始化
-      echo "formating hdfs~~~"
-      #创建pg数据库并格式化hdfs
-      if [ "$csv" = "" ];then
-          ./hdfsformat.sh -server_IP $server_IP -cluster_name $cluster_name
+    printf "waiting for hdfs to be installed"
+    y=0
+    while [ ! -d "$hdfs_dir" ]
+    do
+      hdfs_dir="/opt/apps/hadoop_sugo"
+      if [ ! -d "$hdfs_dir" ];then
+        sleep 3
+      y=$[$y+1]
+      if [ $y -lt 180 ];then
+          printf "."
+          continue
       else
-          ./hdfsformat.sh -server_IP $server_IP -cluster_name $cluster_name -csv
+          echo -e "\n==========Timeout==========\nThe installation of HDFS failed, please check the configurations and run start.sh again!"
+          exit 1
       fi
-      break
-    else
-      sleep 5
-      z=$[$z+1]
-      if [ $z -lt 60 ];then
-        printf "."
-        continue
       else
-        echo -e "\n==========Timeout==========\nThe start of HDFS failed, you can start HDFS on http://"'$ambari_server'":8080, or check the configurations and run start.sh again!"
-        exit 1
+        break
       fi
-    fi
-  done
-  echo "hdfs format finished~~~~~~~~~~~~~~~~~~~~~~"
+    done
+    echo ""
 
-#安装hdfs之后的所有服务
-python install_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
-sleep 10
+   #启动hdfs及之前的服务
+   echo "starting service postgres, redis, zookeeper and hdfs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+   python start_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
+   sleep 10
 
-#判断astro是否已经安装完成
-/usr/bin/expect <<-EOF
-set timeout 100000
-spawn ssh $astro_host
-                expect "*]#*"
-          send "wget $baseurl/deploy_scripts/centos6/service/pg_db_astro.sh\n"
-                expect "*]#*"
-          send "chmod 755 pg_db_astro.sh\n"
-                expect "*]#*"
-          send "./pg_db_astro.sh\n"
-                expect "*]#*"
-          send "rm -rf pg_db_astro.sh\n"
-                expect "*]#*"
+    #判断所有journalnode是否都已经启动
+    printf "waiting for journalnode to start"
+    z=0
+    while true;do
+    curl -u admin:admin -H "X-Requested-By: ambari" -X GET "http://$server_IP:8080/api/v1/clusters/$cluster_name/components/?ServiceComponentInfo/category=SLAVE&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,&minimal_response=true&_=1499937079425" > slave.json
+    python slave.py slave.json > slave.txt
+    state=`sed ':a;N;$!ba;s/\n//g' slave.txt`
+      if [ "$state" = "$journalnode_stat" ];then
+        # hdfs初始化
+        echo "formating hdfs~~~"
+        #创建pg数据库并格式化hdfs
+        if [ "$csv" = "" ];then
+            ./hdfsformat.sh -server_IP $server_IP -cluster_name $cluster_name
+        else
+            ./hdfsformat.sh -server_IP $server_IP -cluster_name $cluster_name -csv
+        fi
+        break
+      else
+        sleep 5
+        z=$[$z+1]
+        if [ $z -lt 60 ];then
+          printf "."
+          continue
+        else
+          echo -e "\n==========Timeout==========\nThe start of HDFS failed, you can start HDFS on http://"'$ambari_server'":8080, or check the configurations and run start.sh again!"
+          exit 1
+        fi
+      fi
+    done
+    echo "hdfs format finished~~~~~~~~~~~~~~~~~~~~~~"
+
+  #安装hdfs之后的所有服务
+  python install_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
+  sleep 10
+
+  #判断astro是否已经安装完成
+  /usr/bin/expect <<-EOF
+  set timeout 100000
+  spawn ssh $astro_host
+                  expect "*]#*"
+            send "wget $baseurl/deploy_scripts/centos6/service/pg_db_astro.sh\n"
+                  expect "*]#*"
+            send "chmod 755 pg_db_astro.sh\n"
+                  expect "*]#*"
+            send "./pg_db_astro.sh\n"
+                  expect "*]#*"
+            send "rm -rf pg_db_astro.sh\n"
+                  expect "*]#*"
 EOF
 
- #start剩余所有服务
-python start_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
+   #start剩余所有服务
+  python start_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
+else
+  
+fi
