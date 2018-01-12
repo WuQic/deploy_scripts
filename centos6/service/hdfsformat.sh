@@ -27,7 +27,7 @@ if [ "$csv" = "" ];then
     namenode1=`cat ../ambari-agent/host | sed -n "1p" |awk '{print $2}'`
     namenode2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
 else
-    namenode_hosts=`cat ../conf/hosts.csv | grep SUGO_NAMENODE | cut -d \, -f 3`
+    namenode_hosts=`cat ../conf/hosts.csv | grep SUGO_NAMENODE | cut -d \, -f 3-`
     arr=(${namenode_hosts//,/ })
     namenode1=${arr[0]}
     namenode2=${arr[1]}

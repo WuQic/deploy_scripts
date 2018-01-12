@@ -198,7 +198,7 @@ sleep 5
 
 if [ "$skip_hadoop" = "" ]; then
   #安装hdfs及之前的服务
-  python install_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
+  python install_service.py $server_IP $cluster_name host_until_hdfs.json
   sleep 15
 
     #判断hdfs是否已经安装，如果没有则等待安装完成
@@ -226,7 +226,7 @@ if [ "$skip_hadoop" = "" ]; then
 
    #启动hdfs及之前的服务
    echo "starting service postgres, redis, zookeeper and hdfs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-   python start_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
+   python start_service.py $server_IP $cluster_name host_until_hdfs.json
    sleep 10
 
     #判断所有journalnode是否都已经启动
