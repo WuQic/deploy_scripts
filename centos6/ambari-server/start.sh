@@ -205,7 +205,7 @@ else
     cp hostbeforhdfs.json ../service/host_until_hdfs.json
     cp hostafterhdfs.json ../service/host_after_hdfs.json
   else
-    python csv_json_withouthdfs.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+    python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
   fi
 fi
 cd -
