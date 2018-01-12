@@ -200,11 +200,15 @@ cd ../conf/
 if [ "$csv" = "" ];then
   cp host_* ../service/
 else
-  python csv_json.py hosts.csv
-  cp hostbeforhdfs.json ../service/host_until_hdfs.json 
-  cp hostafterhdfs.json ../service/host_after_hdfs.json
+  if [ "skip_hadoop" = "" ];then
+    python csv_json.py hosts.csv
+    cp hostbeforhdfs.json ../service/host_until_hdfs.json
+    cp hostafterhdfs.json ../service/host_after_hdfs.json
+  else
+    python csv_json_withouthdfs.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+  fi
 fi
-cd -  
+cd -
 
 #创建集群并安装服务
 if [ $skip_cluster_services -eq 0 ]
