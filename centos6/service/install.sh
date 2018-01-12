@@ -118,17 +118,23 @@ if [ "$csv" = "" ];then
   cluster_host2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
   cluster_host3=`cat ../ambari-agent/host | sed -n "3p" |awk '{print $2}'`
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_until_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_until_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_until_hdfs.json
+  if [ "$skip_hadoop" = "" ]; then
+    sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_until_hdfs.json
+    sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_until_hdfs.json
+    sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_until_hdfs.json
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_after_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_after_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_after_hdfs.json
+    sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_after_hdfs.json
+    sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_after_hdfs.json
+    sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_after_hdfs.json
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
+    sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
+    sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
+    sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
+  else
+    sed -i "s/test1.sugo.vm/${cluster_host1}/g" hosts_csv.json
+    sed -i "s/test2.sugo.vm/${cluster_host2}/g" hosts_csv.json
+    sed -i "s/test3.sugo.vm/${cluster_host3}/g" hosts_csv.json
+  fi
 fi
 
 #获取namenode及astro所在主机并替换astro和druid的配置项
