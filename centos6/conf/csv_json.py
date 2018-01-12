@@ -12,7 +12,7 @@ service1={}
 service2={}
 a=["POSTGRES_SUGO", "REDIS_SUGO", "ZOOKEEPER_SUGO", "HDFS_SUGO"]
 #b=["YARN_SUGO", "MAPREDUCE_SUGO", "KAFKA_SUGO", "GATEWAY_SUGO", "DRUIDIO_SUGO", "ASTRO_SUGO"]
-b=str(sys.argv[2:])
+b=sys.argv[2:]
 for line in lines:
     components={}
     server=line.split(",")[0]

@@ -7,7 +7,7 @@ init_url=$baseurl/deploy_scripts/centos6/ambari-server
 
 ./jdk.sh $baseurl
 
-cat $passwd_file | while read line;
+cat $params_file | while read line;
 do
 pw=`echo $line|awk '{print $1}'`
 hn=`echo $line|awk '{print $2}'`

@@ -2,7 +2,6 @@
 #$1 -- ambari-server的IP
 
 baseurl=$1
-
 params_file=$2
 
 #ambari-server主机参数优化（包括THP、防火墙等）

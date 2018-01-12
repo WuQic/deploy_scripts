@@ -7,7 +7,7 @@ if os.path.exists("hosts_csv.json"):
 services1=[]
 service1={}
 #a=["POSTGRES_SUGO", "REDIS_SUGO", "ZOOKEEPER_SUGO", "GATEWAY_SUGO", "DRUIDIO_SUGO", "ASTRO_SUGO"]
-a=str(sys.argv[2:])
+a=sys.argv[2:]
 for line in lines:
     components={}
     server=line.split(",")[0]

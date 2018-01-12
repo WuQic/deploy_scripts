@@ -129,7 +129,7 @@ else
   sed -i "s/test1.sugo.vm/${cluster_host1}/g" hosts_csv.json
   sed -i "s/test2.sugo.vm/${cluster_host2}/g" hosts_csv.json
   sed -i "s/test3.sugo.vm/${cluster_host3}/g" hosts_csv.jsonfi
-
+fi
 
 #获取namenode及astro所在主机并替换astro和druid的配置项
 cd ../service/
@@ -196,7 +196,7 @@ sleep 5
 #ambari-server restart
 
 
-if [ "$skip_hadoop" = "" ];then
+if [ "$skip_hadoop" = "" ]; then
   #安装hdfs及之前的服务
   python install_service.py $server_IP $cluster_name host_until_hdfs.json >> service.log
   sleep 15
@@ -210,14 +210,14 @@ if [ "$skip_hadoop" = "" ];then
       hdfs_dir="/opt/apps/hadoop_sugo"
       if [ ! -d "$hdfs_dir" ];then
         sleep 3
-      y=$[$y+1]
-      if [ $y -lt 180 ];then
-          printf "."
-          continue
-      else
-          echo -e "\n==========Timeout==========\nThe installation of HDFS failed, please check the configurations and run start.sh again!"
-          exit 1
-      fi
+        y=$[$y+1]
+        if [ $y -lt 180 ];then
+            printf "."
+            continue
+        else
+            echo -e "\n==========Timeout==========\nThe installation of HDFS failed, please check the configurations and run start.sh again!"
+            exit 1
+        fi
       else
         break
       fi

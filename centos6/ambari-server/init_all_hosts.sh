@@ -6,7 +6,7 @@ params_file=$2
 initurl=$baseurl/deploy_scripts/centos6/ambari-server
 
 
-cat $passwd_file | while read line;
+cat $params_file | while read line;
 do
 pw=`echo $line|awk '{print $1}'`
 hn=`echo $line|awk '{print $2}'`
@@ -45,7 +45,7 @@ EOF
     	"*yes/no*" { send "yes\n"
     	expect "*]#*" { send "wget $initurl/init_centos6.sh; chmod 755 init_centos6.sh; ./init_centos6.sh; rm -rf init_centos6.sh\n" } }
     	"*]#*" { send "wget $initurl/init_centos6.sh; chmod 755 init_centos6.sh; ./init_centos6.sh; rm -rf init_centos6.sh\n" }
-    	"*]#*"
+    	expect "*]#*"
     	}
     		expect "*]#*"
 EOF
