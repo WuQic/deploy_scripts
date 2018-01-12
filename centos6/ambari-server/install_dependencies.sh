@@ -1,9 +1,11 @@
 #!/bin/bash
 
+params_file=$1
+
 #ambari-server主机安装相关软件及http服务
 yum install -y wget ntp openssh-clients expect
 
-cat ip.txt |while read line;
+cat $params_file |while read line;
 do
 pw=`echo $line|awk '{print $1}'`
 hn=`echo $line|awk '{print $2}'`

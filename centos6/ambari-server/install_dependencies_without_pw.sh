@@ -3,7 +3,7 @@
 #ambari-server主机安装相关软件及http服务
 yum install -y wget ntp openssh-clients expect
 
-passwd_file=host
+passwd_file=$1
 
 
 cat $passwd_file |while read line;

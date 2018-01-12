@@ -128,9 +128,9 @@ baseurl=http://$ambari_ip:$http_port/sugo_yum
 
 #相关依赖并开启ntpd
 if [ $skip_ssh -eq 0 ]; then
-    ./install_dependencies.sh
+    ./install_dependencies.sh $params_file
 else
-    ./install_dependencies_without_pw.sh
+    ./install_dependencies_without_pw.sh $params_file
 fi
 echo "~~~~~~~~~~~~dependencies installed~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
