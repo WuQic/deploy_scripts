@@ -31,8 +31,8 @@ skip_createdir=0
 skip_ssh=0
 skip_jdk=0
 skip_cluster_services=0
-skip_hadoop=0
-skip_kafka=0
+skip_hadoop=""
+skip_kafka=""
 
 
 if [ "$skip_ssh" -eq 0 ]; then
@@ -66,6 +66,8 @@ while [[ $# -gt 0 ]]; do
        -skip_ssh) skip_ssh=1 && shift ;;
        -skip_jdk) skip_jdk=1 && shift ;;
        -skip_cluster_services) skip_cluster_services=1 && shift ;;
+       -skip_hadoop) skip_hadoop=1 && shift ;;
+       -skip_kafka) skip_kafka=1 && shift ;;
     esac
 done
 
@@ -201,11 +203,19 @@ if [ "$csv" = "" ];then
   cp host_* ../service/
 else
   if [ "skip_hadoop" = "" ];then
-    python csv_json.py hosts.csv
+    python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
     cp hostbeforhdfs.json ../service/host_until_hdfs.json
     cp hostafterhdfs.json ../service/host_after_hdfs.json
+    if [ "skip_kafka" != "" ];then
+      python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+      cp hostbeforhdfs.json ../service/host_until_hdfs.json
+      cp hostafterhdfs.json ../service/host_after_hdfs.json
+    fi
   else
     python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+    if [ "skip_kafka" != "" ];then
+      python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+    fi
   fi
 fi
 cd -

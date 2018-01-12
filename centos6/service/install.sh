@@ -9,6 +9,7 @@ function print_usage(){
   echo "     -cluster_name <name>           The name of cluster"
   echo "     -server_password <server_password>    The password of root on ambari-server"
   echo "     -csv                           Choose the hosts that the component installed on, or take the defaults without the parameter"
+  echo "     -skip_hadoop                   Do not install hadoop"
 }
 
 #cd `dirname $0`
@@ -17,6 +18,7 @@ server_IP=""
 cluster_name=""
 server_password=""
 csv=""
+skip_hadoop=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -26,6 +28,7 @@ while [[ $# -gt 0 ]]; do
        -cluster_name) cluster_name=$2 && shift 2;;
        -server_password) server_password=$2 && shift 2;;
        -csv) csv=1 && shift ;;
+       -skip_hadoop) skip_hadoop=1 && shift ;;
     esac
 done
 
