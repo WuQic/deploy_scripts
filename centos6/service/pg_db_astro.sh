@@ -16,7 +16,7 @@ if [ ! -d "$postgres_path" ]; then
     fi
 else
     postgres_pidfile="/data1/postgres/data/postmaster.pid"
-    if [ ! -f "$postgres_pid" ]; then
+    if [ ! -f "$postgres_pidfile" ]; then
         su - postgres -c "/opt/apps/postgres_sugo/bin/pg_ctl -D /data1/postgres/data -l /data1/postgres/log/postgres.log start"
         sleep 3
         cd /opt/apps/postgres_sugo

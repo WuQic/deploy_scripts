@@ -55,7 +55,7 @@ spawn ssh $1
 	send "chmod 700 .ssh/\n"
         expect "*~]\$*"
 	send "chmod 600 .ssh/*\n"
-		expect "*~]\$*"
+		expect "*~]\$*" }
 EOF
 
 

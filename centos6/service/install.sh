@@ -261,7 +261,7 @@ if [ "$skip_hadoop" = "" ]; then
     echo "hdfs format finished~~~~~~~~~~~~~~~~~~~~~~"
 
   #安装hdfs之后的所有服务
-  python install_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
+  python install_service.py $server_IP $cluster_name host_after_hdfs.json
   sleep 10
 
   #判断astro是否已经安装完成
@@ -280,7 +280,7 @@ if [ "$skip_hadoop" = "" ]; then
 EOF
 
   #start剩余所有服务
-  python start_service.py $server_IP $cluster_name host_after_hdfs.json >> service.log
+  python start_service.py $server_IP $cluster_name host_after_hdfs.json
 else
   python install_service.py $server_IP $cluster_name hosts_csv.json
   sleep 15
