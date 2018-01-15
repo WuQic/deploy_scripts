@@ -37,11 +37,11 @@ EOF
 
 #copy authorized_key to namenode1 and namenode2
 scp $1:/home/hdfs/.ssh/id_rsa.pub /root/id_rsa.pub.nn1
-scp $3:/home/hdfs/.ssh/id_rsa.pub /root/id_rsa.pub.nn2
+scp $2:/home/hdfs/.ssh/id_rsa.pub /root/id_rsa.pub.nn2
 cat /root/id_rsa.pub.nn1 >> /root/authorized_keys
 cat /root/id_rsa.pub.nn2 >> /root/authorized_keys
 scp /root/authorized_keys $1:/home/hdfs/.ssh/
-scp /root/authorized_keys $3:/home/hdfs/.ssh/
+scp /root/authorized_keys $2:/home/hdfs/.ssh/
 
 #NameNode1生成包含NameNode1和NameNode2的authorized_keys，且将其发送给NameNode2，赋予.ssh文件夹及其文件权限
 ssh $1 "chown hdfs:hdfs /home/hdfs/.ssh/authorized_keys"
