@@ -15,7 +15,7 @@ json_array = json.loads(host_service.read())
 for service in json_array:
     for key, value in service.items():
         ambariService.addservice(key, base_url)
-
+        print "install: " + key
         ambariService.addcomponent(value, base_url)
 
         ambariService.create_apply_config(key, base_url)

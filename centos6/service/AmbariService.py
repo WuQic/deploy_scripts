@@ -21,13 +21,13 @@ class AmbariService:
         data1["ServiceInfo"] = serviceinfo
         serviceinfo["service_name"] = service_name
         url0 = base_url + "/services"
-        print url0
+        #print url0
 
         request = urllib2.Request(url0)
         request.add_header('Authorization', 'Basic YWRtaW46YWRtaW4=')
         request.add_header('X-Requested-By', 'ambari')
         response = urllib2.urlopen(request, json.dumps(data1))
-        print response.read()
+        #print response.read()
 
     def addcomponent(self, host_service, base_url):
 
@@ -86,7 +86,7 @@ class AmbariService:
                     request.add_header('Authorization', 'Basic YWRtaW46YWRtaW4=')
                     request.add_header('X-Requested-By', 'ambari')
                     response = urllib2.urlopen(request, json.dumps(data2))
-                    print response.read()
+                    #print response.read()
 
                     # apply configuration
                     data3 = {}
@@ -102,7 +102,7 @@ class AmbariService:
                     request.add_header('X-Requested-By', 'ambari')
                     request.get_method = lambda: "PUT"
                     response = urllib2.urlopen(request, json.dumps(data3))
-                    print response.read()
+                    #print response.read()
 
     def create_host_component(self, host_service, base_url):
 
@@ -122,7 +122,7 @@ class AmbariService:
                 request.add_header('Authorization', 'Basic YWRtaW46YWRtaW4=')
                 request.add_header('X-Requested-By', 'ambari')
                 response = urllib2.urlopen(request, json.dumps(data4))
-                print response.read()
+                #print response.read()
 
     def installservice(self, service_name, base_url):
         data5 = {}
@@ -135,7 +135,7 @@ class AmbariService:
         request.add_header('X-Requested-By', 'ambari')
         request.get_method = lambda: "PUT"
         response = urllib2.urlopen(request, json.dumps(data5))
-        print response.read()
+        #print response.read()
 
 
     def start(self, service_name, base_url):
@@ -149,4 +149,4 @@ class AmbariService:
         request.add_header('X-Requested-By', 'ambari')
         request.get_method = lambda: "PUT"
         response = urllib2.urlopen(request, json.dumps(data6))
-        print response.read()
+        #print response.read()
