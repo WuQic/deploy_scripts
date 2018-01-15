@@ -128,7 +128,7 @@ EOF
 
 echo `pwd`
 #启动hdfs所有组件
-python start_service.py $server_IP $cluster_name host_hdfs.json
+#python start_service.py $server_IP $cluster_name host_hdfs.json
 
 #/usr/bin/expect <<-EOF
 #set timeout 100000

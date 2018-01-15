@@ -17,7 +17,6 @@ spawn ssh $1
         expect "*again:*"
 	send "\n"
 		expect "*]\$*" }}
-		expect "*~]\#*"
 EOF
 
 #Namenode2上hdfs用户生成ssh秘钥对
@@ -34,7 +33,6 @@ spawn ssh $2
         expect "*again:*"
 	send "\n"
 		expect "*]\$*" }}
-		expect "*~]\#*"
 EOF
 
 #copy authorized_key to namenode1 and namenode2
