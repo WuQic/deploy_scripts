@@ -122,9 +122,9 @@ if [ "$skip_hadoop" = "" ]; then
   sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_after_hdfs.json
   sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_after_hdfs.json
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
+  #sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
+  #sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
+  #sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
 else
   sed -i "s/test1.sugo.vm/${cluster_host1}/g" hosts_csv.json
   sed -i "s/test2.sugo.vm/${cluster_host2}/g" hosts_csv.json
