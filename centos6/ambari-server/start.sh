@@ -212,6 +212,7 @@ cd ../conf/
     python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
     if [ "$skip_kafka" != "" ];then
       python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+      cp hosts_csv.json ../service/
     fi
   fi
 cd -

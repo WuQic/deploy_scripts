@@ -128,7 +128,7 @@ if [ "$skip_hadoop" = "" ]; then
 else
   sed -i "s/test1.sugo.vm/${cluster_host1}/g" hosts_csv.json
   sed -i "s/test2.sugo.vm/${cluster_host2}/g" hosts_csv.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" hosts_csv.jsonfi
+  sed -i "s/test3.sugo.vm/${cluster_host3}/g" hosts_csv.json
 fi
 
 #获取namenode及astro所在主机并替换astro和druid的配置项
