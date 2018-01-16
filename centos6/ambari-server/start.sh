@@ -8,7 +8,6 @@ function print_usage(){
   echo "     -http_port <port>              Http port, default: 81"
   echo "     -cluster_name <name>           The name of cluster, default: sugo_cluster"
   echo "     -skip_ambari                   If installed ambari-server, you can add the parameter to skip the install of ambari-server"
-  echo "     -csv                           Choose the hosts that the component installed on, or take the defaults without the parameter"
   echo "     -skip_http                     Add the parameter if the httpd service installed before and you do not want change http port"
   echo "     -skip_createdir                Add the parameter if the directories created"
   echo "     -skip_ssh                      Add the parameter if the password-less SSH configured"
@@ -60,7 +59,6 @@ while [[ $# -gt 0 ]]; do
        -http_port) http_port=$2 && shift 2;;
        -cluster_name) cluster_name=$2 && shift 2;;
        -skip_ambari) skip_ambari=1 && shift ;;
-       -csv) csv=1 && shift ;;
        -skip_http) skip_http=1 && shift ;;
        -skip_createdir) skip_createdir=1 && shift ;;
        -skip_ssh) skip_ssh=1 && shift ;;
