@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #创建druid、sugo_astro/pio库
-printf "~~~~~~~~~~~~~~~~~~~~~~~~~start to create databases~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+printf "~~~~~~~~~~~~~~~~~~~~~~~~~start to create databases~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 while true; do
 postgres_path="/opt/apps/postgres_sugo"
 if [ ! -d "$postgres_path" ]; then
