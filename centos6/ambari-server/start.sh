@@ -35,9 +35,9 @@ skip_kafka=""
 
 
 if [ "$skip_ssh" -eq 0 ]; then
-  params_file=host
+  params_file="ip.txt"
 else
-  params_file=ip.txt
+  params_file="host"
 fi
 
 while read line
