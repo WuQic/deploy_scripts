@@ -135,7 +135,7 @@ echo "~~~~~~~~~~~~dependencies installed~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #分发hosts文件
 if [ $skip_ssh -eq 0 ]
   then
-    ./configure_hosts.sh
+    ./configure_hosts.sh $params_file
     echo "~~~~~~~~~~~~hosts file success coped~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 else
     echo "~~~~~~~~~~~~scp hosts file skipped~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
