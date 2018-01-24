@@ -2,8 +2,8 @@
 
 #NameNode1 = $1
 #NameNode2 = $2
-user="hdfs"
-group="hdfs"
+user=$3
+group=$4
 
 #Namenode1上user用户生成ssh秘钥对,
 ssh $1 "yum install -y expect"

@@ -43,7 +43,7 @@ pw1=`cat ../ambari-server/$passwd_file | grep $namenode1 |awk '{print $1}'`
 pw2=`cat ../ambari-server/$passwd_file | grep $namenode2 |awk '{print $1}'`
 
 #配置namenode的hdfs用户之间的免密码登录
-./passwdless.sh $namenode1 $namenode2
+./passwdless.sh $namenode1 $namenode2 hdfs hdfs
 
 #格式化namenode
 #1.格式化zkfc并启动namenode1节点的zkfc
