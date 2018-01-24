@@ -22,7 +22,7 @@ spawn ssh $1
 EOF
 
 #Namenode2上user用户生成ssh秘钥对
-ssh $3 "yum install -y expect"
+ssh $2 "yum install -y expect"
 /usr/bin/expect <<-EOF
 set timeout 100000
 spawn ssh $2
