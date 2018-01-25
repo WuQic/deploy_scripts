@@ -76,6 +76,12 @@ spawn ssh $2
 	send "ssh $1\n"
 		expect  "*(yes/no)?"  
 	send "yes\n"
+		expect "*~]\$*"
+    send "exit\n"
+    	expect "*~]\$*"
+	send "ssh $2\n"
+		expect  "*(yes/no)?"
+	send "yes\n"
 		expect "*~]\$*"}
 EOF
 
@@ -87,6 +93,12 @@ spawn ssh $1
 		expect "*~]\$*" 
 	send "ssh $2\n"
 		expect  "*(yes/no)?"  
+	send "yes\n"
+		expect "*~]\$*"
+    send "exit\n"
+    	expect "*~]\$*"
+	send "ssh $1\n"
+		expect  "*(yes/no)?"
 	send "yes\n"
 		expect "*~]\$*"}
 EOF
