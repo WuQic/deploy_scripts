@@ -99,7 +99,7 @@ sort host1 >> host2
 
 cat host2 | while read line;
 do
-hn2=`echo $line|awk '{print $1}'`
+hn2=`echo $line|awk '{print $1}' | tr '[A-Z]' '[a-z]'`
 ip2=`echo $line|awk '{print $2}'`
 echo "$ip2 $hn2" >> ../ambari-agent/host
 done
