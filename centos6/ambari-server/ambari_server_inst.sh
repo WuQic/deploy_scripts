@@ -25,7 +25,11 @@ expect {
 EOF
 
 #add the license
-license=`cat license`
-echo "ambari_license=$license" >> /etc/ambari-server/conf/ambari.properties
+ambari_license=`cat /etc/ambari-server/conf/ambari.properties | grep "ambari_license"`
+if [ "$ambari_license" = "" ];then
+  license=`cat license`
+  echo "ambari_license=$license" >> /etc/ambari-server/conf/ambari.properties
+fi
+
 
 ambari-server start
