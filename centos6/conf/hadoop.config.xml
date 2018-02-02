@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property require-input="true">
+    <name>hadoop.config</name>
+    <description></description>
+    <value>customer</value>
+  </property>
+
+  <property>
+    <name>hadoop.user</name>
+    <description>hadoop user</description>
+    <value>hdfs</value>
+  </property>
+
+  <property>
+    <name>hadoop.group</name>
+    <description>hadoop group</description>
+    <value>hadoop</value>
+  </property>
+
+  <property>
+  <name>hdfs-site.xml</name>
+  <description>使用已有hadoop时，hadoop的hdfs-site.xml配置文件的配置内容</description><value>
+-
+-
+  </value>
+  </property>
+
+  <property>
+  <name>core-site.xml</name>
+  <description>使用已有hadoop时，hadoop的core-site.xml配置文件的配置内容</description>
+  <value>
+-
+-
+  </value>
+  </property>
+
+</configuration>

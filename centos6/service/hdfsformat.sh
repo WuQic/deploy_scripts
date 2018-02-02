@@ -1,16 +1,49 @@
 #!/bin/bash
 
+function print_usage(){
+  echo "Usage: start [-options]"
+  echo " where options include:"
+  echo "     -help                          Documentation"
+  echo "     -server_IP <server_IP>         (required)The IP of Ambari-Server"
+  echo "     -cluster_name <name>           (required)The name of cluster"
+  echo "     -csv                           Choose the hosts that the component installed on, or take the defaults without the parameter"
+}
 
-pw1=$1
-server_IP=$2
-cluster_name=$3
+#cd `dirname $0`
+server_IP=""
+cluster_name=""
+csv=""
 
-namenode1=`cat ../ambari-agent/host | sed -n "1p" |awk '{print $2}'`
-namenode2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
-pw2=`cat ../ambari-server/ip.txt | grep $namenode2 |awk '{print $2}'`
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+           -help)  print_usage; exit 0 ;;
+       -server_IP) server_IP=$2 && shift 2;;
+       -cluster_name) cluster_name=$2 && shift 2;;
+       -csv) csv=1 && shift ;;
+    esac
+done
+
+if [ "$csv" = "" ];then
+    namenode1=`cat ../ambari-agent/host | sed -n "1p" |awk '{print $2}'`
+    namenode2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
+else
+    namenode_hosts=`cat ../conf/hosts.csv | grep SUGO_NAMENODE | cut -d \, -f 3-`
+    arr=(${namenode_hosts//,/ })
+    namenode1=${arr[0]}
+    namenode2=${arr[1]}
+fi
+
+if [ ! -f ip.txt ]; then
+  passwd_file=host
+else
+  passwd_file=ip.txt
+fi
+
+pw1=`cat ../ambari-server/$passwd_file | grep $namenode1 |awk '{print $1}'`
+pw2=`cat ../ambari-server/$passwd_file | grep $namenode2 |awk '{print $1}'`
 
 #配置namenode的hdfs用户之间的免密码登录
-./passwdless.sh $namenode1 $pw1 $namenode2 $pw2
+./passwdless.sh $namenode1 $namenode2 hdfs hdfs
 
 #格式化namenode
 #1.格式化zkfc并启动namenode1节点的zkfc
@@ -95,7 +128,7 @@ EOF
 
 echo `pwd`
 #启动hdfs所有组件
-python start_service.py $server_IP $cluster_name host_hdfs.json
+#python start_service.py $server_IP $cluster_name host_hdfs.json
 
 #/usr/bin/expect <<-EOF
 #set timeout 100000

@@ -6,11 +6,11 @@ host_name1=`hostname | cut -d \. -f 3`
 host_name2=`hostname | cut -d \. -f 4`
 
 if [ "$host_name1" = "" ];then
-  echo "请修改hostname到二级域名的格式~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "please alter the hostname on domain name format~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
 
 if [ ! -z $host_name2 ];then
-  echo "请修改hostname到二级域名的格式~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "please alter the hostname on domain name format~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
 
 

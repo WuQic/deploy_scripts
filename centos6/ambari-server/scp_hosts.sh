@@ -1,5 +1,31 @@
 #!/bin/bash
 
+if [ -f host_old ];then
+  cat host_old | while read line;do
+    sed -i "s/$line/""/g" /etc/hosts
+  done
+  rm -rf host_old
+fi
+
+#删除/etc/hosts文件内已有IP或hostname与host文件需要添加的IP或hostname重复的映射
+cat host | while read line; do
+  ipaddr=`echo $line|awk '{print $1}'`
+  hns=`echo $line|awk '{print $2}'`
+  cat /etc/hosts | while read line; do
+    ipaddr_host=`echo $line|awk '{print $1}'`
+    hns_host=`echo $line|awk '{print $2}'`
+    if [ "$ipaddr" = "$ipaddr_host" ] || [ "$hns" = "$hns_host" ];then
+      sed -i "s/$line//g" /etc/hosts
+    fi
+  done
+done
+
+#删除/etc/hosts文件的空行
+sed -i "/^$/d" /etc/hosts
+
+cat host >> /etc/hosts
+cp host host_old
+
 local_hn=`hostname`
 
 cat ip.txt|while read line;

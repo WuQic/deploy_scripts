@@ -24,5 +24,6 @@ for service in json_array:
         ambariService.create_host_component(value, base_url)
 
         ambariService.installservice(key, base_url)
+        print "installing: " + key
         time.sleep(3)
         #ambariService.start(key, base_url)

@@ -16,8 +16,8 @@ cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
 
 cat $conf_dir |while read line;
 do
-hn=`echo $line|awk '{print $1}'`
-pw=`echo $line|awk '{print $2}'`
+pw=`echo $line|awk '{print $1}'`
+hn=`echo $line|awk '{print $2}'`
 local_hn=`hostname`
 
 if [ "$hn" != "$local_hn" ];then
