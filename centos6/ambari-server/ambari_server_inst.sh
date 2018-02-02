@@ -25,7 +25,7 @@ expect {
 EOF
 
 #add the license
-ambari_license=`cat /etc/ambari-server/conf/ambari.properties | grep "ambari_license"`
+ambari_license=`cat /etc/ambari-server/conf/ambari.properties | grep "ambari_license="`
 if [ "$ambari_license" = "" ];then
   license=`cat license`
   echo "ambari_license=$license" >> /etc/ambari-server/conf/ambari.properties
