@@ -239,7 +239,7 @@ if [ $skip_cluster_services -eq 0 ]
 
     cd ../service
     echo `pwd`
-    echo "http_port:$http_port, server_ip:$ambari_ip, cluster_name:$cluster_name, serverpassword:$server_password, baseurl:$baseurl"
+    echo "http_port:$http_port, server_ip:$ambari_ip, cluster_name:$cluster_name, baseurl:$baseurl"
     if [ "$skip_hadoop" = "" ];then
       source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password
     else
