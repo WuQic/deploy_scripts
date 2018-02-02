@@ -24,4 +24,8 @@ expect {
         expect "*]#*"
 EOF
 
+#add the license
+license=`cat license`
+echo "ambari_license=$license" >> /etc/ambari-server/conf/ambari.properties
+
 ambari-server start
