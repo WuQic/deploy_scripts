@@ -31,7 +31,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-#根据../ambari-server/host文件内的行数判断journalnode_stat的值
+#根据../conf/hosts.csv文件内判断journalnode_stat的值
 journalnode_stat=""
 if [ "$skip_hadoop" = "" ]; then
   journalnode_hosts=`cat ../conf/hosts.csv | grep SUGO_JOURNALNODE | cut -d \, -f 3-`
