@@ -32,6 +32,7 @@ else
         bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE druid WITH OWNER = postgres ENCODING = UTF8;"
         bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE sugo_astro WITH OWNER = postgres ENCODING = UTF8;"
         bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE pio WITH OWNER = postgres ENCODING = UTF8;"
+        bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE uindex WITH OWNER = postgres ENCODING = UTF8;"
         cd -
     fi
     break
