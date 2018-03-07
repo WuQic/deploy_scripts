@@ -156,6 +156,7 @@ sed -i "s/test2.sugo.vm/${gateway_host}/g" changed_configuration/astro-site.xml
 sed -i "s/test3.sugo.vm/${postgres_host}/g" changed_configuration/astro-site.xml
 sed -i "s/test4.sugo.vm/${redis_host}/g" changed_configuration/astro-site.xml
 sed -i "s/test1.sugo.vm/${postgres_host}/g" changed_configuration/common.runtime.xml
+sed -i "s/test1.sugo.vm/${postgres_host}/g" changed_configuration/uindex-common.runtime.xml
 cd -
 
 #判断httpd服务是否已启动
