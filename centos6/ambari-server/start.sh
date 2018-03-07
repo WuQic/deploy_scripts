@@ -214,20 +214,20 @@ sed -i "s/test3.sugo.vm/${cluster_host3}/g" ../conf/hosts.csv
 rm -rf ../service/host_*
 cd ../conf/
   if [ "$skip_hadoop" = "" ];then
-    python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+    python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO KAFKA_SUGO GATEWAY_SUGO UINDEX_SUGO ASTRO_SUGO
     cp hostbeforhdfs.json ../service/host_until_hdfs.json
     cp hostafterhdfs.json ../service/host_after_hdfs.json
     if [ "$skip_kafka" != "" ];then
-      python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+      python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO GATEWAY_SUGO UINDEX_SUGO ASTRO_SUGO
       cp hostbeforhdfs.json ../service/host_until_hdfs.json
       cp hostafterhdfs.json ../service/host_after_hdfs.json
     fi
   else
     mv ../conf/hadoop.config.xml ../service/changed_configurations/
-    python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+    python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO KAFKA_SUGO GATEWAY_SUGO UINDEX_SUGO ASTRO_SUGO
     cp hosts_csv.json ../service/
     if [ "$skip_kafka" != "" ];then
-      python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+      python csv_json_withouthadoop.py hosts.csv POSTGRES_SUGO REDIS_SUGO ZOOKEEPER_SUGO GATEWAY_SUGO UINDEX_SUGO ASTRO_SUGO
       cp hosts_csv.json ../service/
     fi
   fi
