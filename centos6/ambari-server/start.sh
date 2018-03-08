@@ -121,9 +121,15 @@ if [ $skip_http -eq 0 ]
     fi
 fi
 
-#修改astro包名
+#修改astro或Uindex包名
 astro_package=`ls /var/www/html/sugo_yum/SG/centos6/1.0/ | grep sugo-analytics*`
-echo $astro_package
+uindex_package=`ls /var/www/html/sugo_yum/SG/centos6/1.0/ | grep *index*`
+if [ ! -z $uindex_package ]; then
+  cd /var/www/html/sugo_yum/SG/centos6/1.0/
+  mv $uindex_package Uindex-1.0.0-bin.tar.gz
+  cd -
+fi
+#echo $astro_package
 cd /var/www/html/sugo_yum/SG/centos6/1.0/
 mv $astro_package sugo-analytics-SAAS.tar.gz
 cd -

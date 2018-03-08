@@ -25,7 +25,7 @@
     </property>
     <property require-input="true">
         <name>activeExtendModules</name>
-        <value>sugo-analytics-extend-standard</value>
+        <value>sugo-analytics-extend-xyyh</value>
         <description></description>
     </property>
 </configuration>
