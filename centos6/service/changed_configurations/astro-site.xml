@@ -28,5 +28,37 @@
         <value>sugo-analytics-extend-xyyh</value>
         <description></description>
     </property>
+
+    <property require-input="true">
+        <name>site.favicon</name>
+        <value>_bc/sugo-analytics-static/assets/images/logo1.ico</value>
+        <description></description>
+    </property>
+        <property require-input="true">
+        <name>site.loginLogoName</name>
+        <value>/_bc/sugo-analytics-static/assets/images/logo2.png</value>
+        <description></description>
+    </property>
+        <property require-input="true">
+        <name>site.mainLogoName</name>
+        <value>/_bc/sugo-analytics-static/assets/images/logo3.png</value>
+        <description></description>
+    </property>
+        <property require-input="true">
+        <name>site.copyrightText</name>
+        <value>© 北京听云</value>
+        <description></description>
+    </property>
+        <property require-input="true">
+        <name>site.copyrightTextLogin</name>
+        <value>s© 2016 ~ 2017 北京基调网络股份有限公司</value>
+        <description></description>
+    </property>
+        <property require-input="true">
+        <name>site.siteName</name>
+        <value>听云</value>
+        <description></description>
+    </property>
+
 </configuration>
 
