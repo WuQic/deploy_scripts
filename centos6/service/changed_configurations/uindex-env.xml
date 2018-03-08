@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property require-input="true">
+    <name>uindex.package.name</name>
+    <value>Uindex-1.0.0-bin.tar.gz</value>
+    <description>uindex 包名</description>
+  </property>
+
+  <property require-input="true">
+    <name>uindex.log.dir</name>
+    <value>/data1/uindex/logs</value>
+    <description>uindex 日志目录</description>
+  </property>
+
+  <property require-input="true">
+    <name>uindex.storage.dir</name>
+    <value>/data1/uindex/var/druid</value>
+    <description>uindex storage目录</description>
+  </property>
+
+  <property require-input="true">
+    <name>java.io.tmpdir</name>
+    <value>/data1/uindex/var/tmp</value>
+    <description></description>
+  </property>
+</configuration>
