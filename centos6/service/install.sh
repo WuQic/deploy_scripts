@@ -174,7 +174,8 @@ while [ "$ambari" = "" ]
 do
   ambari=`netstat -ntlp | grep 8080`
   if [ "$ambari" = "" ];then
-    sleep 1
+    sleep 2
+    ambari-server start
     x=$[$x+1]
     if [ $x -lt 60 ];then
         printf "."
