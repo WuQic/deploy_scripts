@@ -98,9 +98,9 @@ fi
 cluster_host1=`cat host | sed -n "1p" |awk '{print $2}'`
 cluster_host2=`cat host | sed -n "2p" |awk '{print $2}'`
 cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
-sed -i "s/test1.sugo.vm/$cluster_host1/g" ../conf/hosts.csv
-sed -i "s/test2.sugo.vm/$cluster_host2/g" ../conf/hosts.csv
-sed -i "s/test3.sugo.vm/$cluster_host3/g" ../conf/hosts.csv
+sed -i "s/test1/$cluster_host1/g" ../conf/hosts.csv
+sed -i "s/test2/$cluster_host2/g" ../conf/hosts.csv
+sed -i "s/test3/$cluster_host3/g" ../conf/hosts.csv
 
 #安装yum源
 if [ $skip_http -eq 0 ]
