@@ -90,7 +90,7 @@ fi
 if [ "$skip_ambari" = "" ];then
   ambari_server_dir="/var/lib/ambari-server"
   if [ -d "$ambari_server_dir" ];then
-    echo "The directory /var/lib/ambari-server exists, make sure you never installed ambari-server. delete the directory or add the parameter if you have installed ambari-server"
+    echo "The directory /var/lib/ambari-server exists, make sure you never installed ambari-server. delete the directory or add the parameter( -skip_ambari ) if you have installed ambari-server"
     exit 1
   fi
 fi
