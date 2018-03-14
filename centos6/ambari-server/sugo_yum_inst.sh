@@ -15,7 +15,7 @@ else
 fi
 
 #修改http端口号
-sed -i "s/`cat /etc/httpd/conf/httpd.conf |grep "Listen " |grep -v "#" |awk '{print $2}'`/$http_port/" /etc/httpd/conf/httpd.conf
+sed -i "s/Listen `cat /etc/httpd/conf/httpd.conf |grep "Listen " |grep -v "#" |awk '{print $2}'`/Listen $http_port/" /etc/httpd/conf/httpd.conf
 
 #创建软连接
 cd ../..

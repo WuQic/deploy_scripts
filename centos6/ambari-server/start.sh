@@ -233,7 +233,7 @@ if [ $skip_cluster_services -eq 0 ]
     echo "http_port:$http_port, server_ip:$ambari_ip, cluster_name:$cluster_name, baseurl:$baseurl"
     if [ "$skip_hadoop" = "" ];then
       echo "source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name "
-      source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password
+      source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name
     else
       echo "source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -skip_hadoop"
       source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -skip_hadoop
