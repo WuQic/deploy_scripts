@@ -108,9 +108,9 @@ if [ -f host_old ]; then
   old_cluster_host1=`cat host | sed -n "1p" |awk '{print $2}'`
   old_cluster_host2=`cat host | sed -n "2p" |awk '{print $2}'`
   old_cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
-  sed -i "s/$old_cluster_host1/$cluster_host1/g" ../conf/hosts.csv
-  sed -i "s/$old_cluster_host1/$cluster_host2/g" ../conf/hosts.csv
-  sed -i "s/$old_cluster_host3/$cluster_host3/g" ../conf/hosts.csv
+  sed -i "s/$old_cluster_host1/$new_cluster_host1/g" ../conf/hosts.csv
+  sed -i "s/$old_cluster_host1/$new_cluster_host2/g" ../conf/hosts.csv
+  sed -i "s/$old_cluster_host3/$new_cluster_host3/g" ../conf/hosts.csv
 fi
 
 #安装yum源
