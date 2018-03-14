@@ -38,7 +38,6 @@ num_host=`cat ../ambari-agent/host | wc -l`
     x=$[$x+1]
     if [ $x -lt 15 ];then
         printf "."
-        ambari-agent start
         continue
     else
         echo -e "\n==========Timeout==========\nThe start of ambari-agent failed, please cancel the start.sh and check the configurations ,run start.sh again!"
