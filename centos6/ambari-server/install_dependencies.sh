@@ -37,9 +37,10 @@ cat $params_file |while read line;
 do
 pw=`echo $line|awk '{print $1}'`
 hn=`echo $line|awk '{print $2}'`
+hn_alias=`echo $line|awk '{print $3}'`
 local_hn=`hostname`
 
-if [ "$hn" != "$local_hn" ];then
+if [ "$hn" != "$local_hn" ] && [ "$hn_alias" != "$local_hn" ];then
 /usr/bin/expect <<-EOF
 set timeout 100000
 spawn ssh $hn

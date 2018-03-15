@@ -7,7 +7,6 @@ function print_usage(){
   echo "     -http_port <port>              Http port"
   echo "     -server_IP <server_IP>         The IP of Ambari-Server"
   echo "     -cluster_name <name>           The name of cluster"
-  echo "     -server_password <server_password>    The password of root on ambari-server"
   echo "     -skip_hadoop                   Do not install hadoop"
 }
 
@@ -15,7 +14,6 @@ function print_usage(){
 http_port=81
 server_IP=""
 cluster_name=""
-server_password=""
 csv="csv"
 skip_hadoop=""
 
@@ -25,7 +23,6 @@ while [[ $# -gt 0 ]]; do
        -http_port) http_port=$2 && shift 2;;
        -server_IP) server_IP=$2 && shift 2;;
        -cluster_name) cluster_name=$2 && shift 2;;
-       -server_password) server_password=$2 && shift 2;;
        -csv) csv=1 && shift ;;
        -skip_hadoop) skip_hadoop=1 && shift ;;
     esac
@@ -73,12 +70,6 @@ fi
 if [ "$cluster_name" = "" ]
   then
     echo "-cluster_name is required!"
-    exit 1
-fi
-
-if [ "$server_password" = "" ]
-  then
-    echo "-server_password is required!"
     exit 1
 fi
 

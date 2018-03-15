@@ -101,6 +101,23 @@ cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
 sed -i "s/host1/$cluster_host1/g" ../conf/hosts.csv
 sed -i "s/host2/$cluster_host2/g" ../conf/hosts.csv
 sed -i "s/host3/$cluster_host3/g" ../conf/hosts.csv
+if [ -f host_old ]; then
+  new_cluster_host1=`cat host | sed -n "1p" |awk '{print $2}'`
+  new_cluster_host2=`cat host | sed -n "2p" |awk '{print $2}'`
+  new_cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
+  old_cluster_host1=`cat host | sed -n "1p" |awk '{print $2}'`
+  old_cluster_host2=`cat host | sed -n "2p" |awk '{print $2}'`
+  old_cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
+  if [ "$new_cluster_host1" != "$old_cluster_host1" ]; then
+    sed -i "s/$old_cluster_host1/$new_cluster_host1/g" ../conf/hosts.csv
+  fi
+  if [ "$new_cluster_host2" != "$old_cluster_host2" ]; then
+    sed -i "s/$old_cluster_host1/$new_cluster_host2/g" ../conf/hosts.csv
+  fi
+  if [ "$new_cluster_host3" != "$old_cluster_host3" ]; then
+    sed -i "s/$old_cluster_host3/$new_cluster_host3/g" ../conf/hosts.csv
+  fi
+fi
 
 #安装yum源
 if [ $skip_http -eq 0 ]
@@ -232,9 +249,11 @@ if [ $skip_cluster_services -eq 0 ]
     echo `pwd`
     echo "http_port:$http_port, server_ip:$ambari_ip, cluster_name:$cluster_name, baseurl:$baseurl"
     if [ "$skip_hadoop" = "" ];then
-      source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password
+      echo "source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name "
+      source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name
     else
-      source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password -skip_hadoop
+      echo "source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -skip_hadoop"
+      source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -skip_hadoop
     fi
     cd -
 fi

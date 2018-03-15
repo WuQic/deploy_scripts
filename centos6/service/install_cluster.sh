@@ -34,7 +34,7 @@ while true;do
 res=`lsof -n -i:8441 | grep $server_IP |awk '{print $9}' | wc -l`
 num_host=`cat ../ambari-agent/host | wc -l`
   if [ $res != $[$num_host + 1] ];then
-    sleep 2
+    sleep 3
     x=$[$x+1]
     if [ $x -lt 15 ];then
         printf "."
