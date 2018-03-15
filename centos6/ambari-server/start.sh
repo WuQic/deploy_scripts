@@ -105,9 +105,9 @@ if [ -f host_old ]; then
   new_cluster_host1=`cat host | sed -n "1p" |awk '{print $2}'`
   new_cluster_host2=`cat host | sed -n "2p" |awk '{print $2}'`
   new_cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
-  old_cluster_host1=`cat host | sed -n "1p" |awk '{print $2}'`
-  old_cluster_host2=`cat host | sed -n "2p" |awk '{print $2}'`
-  old_cluster_host3=`cat host | sed -n "3p" |awk '{print $2}'`
+  old_cluster_host1=`cat host_old | sed -n "1p" |awk '{print $2}'`
+  old_cluster_host2=`cat host_old | sed -n "2p" |awk '{print $2}'`
+  old_cluster_host3=`cat host_old | sed -n "3p" |awk '{print $2}'`
   if [ "$new_cluster_host1" != "$old_cluster_host1" ]; then
     sed -i "s/$old_cluster_host1/$new_cluster_host1/g" ../conf/hosts.csv
   fi
