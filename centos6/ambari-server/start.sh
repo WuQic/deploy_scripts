@@ -7,6 +7,7 @@ function print_usage(){
   echo "     -ambari_ip <ip>                (required) The IP of Ambari-Server"
   echo "     -http_port <port>              Http port, default: 81"
   echo "     -cluster_name <name>           The name of cluster, default: sugo_cluster"
+  echo "     -new_hostname                  Change hostname"
   echo "     -skip_ambari                   If installed ambari-server, you can add the parameter to skip the install of ambari-server"
   echo "     -skip_http                     Add the parameter if the httpd service installed before and you do not want change http port"
   echo "     -skip_createdir                Add the parameter if the directories created"
@@ -58,6 +59,7 @@ while [[ $# -gt 0 ]]; do
        -ambari_ip) ambari_ip=$2 && shift 2;;
        -http_port) http_port=$2 && shift 2;;
        -cluster_name) cluster_name=$2 && shift 2;;
+       -new_hostname) hostname="new_hostname" && shift ;;
        -skip_ambari) skip_ambari=1 && shift ;;
        -skip_http) skip_http=1 && shift ;;
        -skip_createdir) skip_createdir=1 && shift ;;
@@ -177,18 +179,18 @@ fi
 ./init_process.sh $baseurl $params_file
 echo "~~~~~~~~~~~init centos ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
-#修改ambari-server节点的hostname
-#if [ $skip_hostname != "skip_hostname" ]
-#  then
-#    hostname $hostname
-#    sed -i "s/HOSTNAME=.*/HOSTNAME=${hostname}/g" /etc/sysconfig/network
-#    #按照ip.txt内的域名修改其它所有节点的hostname
-#    ./hostname.sh ip.txt
-#    cat new_hostname >> /etc/hosts
-#    echo "~~~~~~~~~~~hostname success changed~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-#  else 
-#    echo "~~~~~~~~~~~change hostname skipped~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-#fi
+# 修改ambari-server节点的hostname
+if [ $skip_hostname = "new_hostname" ]
+ then
+   hostname $hostname
+   sed -i "s/HOSTNAME=.*/HOSTNAME=${hostname}/g" /etc/sysconfig/network
+   #按照ip.txt内的域名修改其它所有节点的hostname
+   ./hostname.sh ip.txt
+   cat new_hostname >> /etc/hosts
+   echo "~~~~~~~~~~~hostname success changed~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+ else 
+   echo "~~~~~~~~~~~change hostname skipped~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+fi
 
 #配置ssh免密码登录
 if [ $skip_ssh -eq 0 ]

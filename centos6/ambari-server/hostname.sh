@@ -5,8 +5,8 @@ conf_file=$1
 ### set hostname
 cat $conf_file |while read line;
 do
-hn=`echo $line|awk '{print $1}'`
-pw=`echo $line|awk '{print $2}'`
+pw=`echo $line|awk '{print $1}'`
+hn=`echo $line|awk '{print $2}'`
 
 /usr/bin/expect <<-EOF
 set timeout 100000
