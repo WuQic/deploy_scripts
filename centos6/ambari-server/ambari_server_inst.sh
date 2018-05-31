@@ -30,7 +30,7 @@ EOF
 res=`grep 'ambari_license' /etc/ambari-server/conf/ambari.properties`
 if [ "$res" = "" ];then
         echo "ambari_licence dir:"$ambari_licence_dir
-        cat ${ambari_licence_dir}'/'ambari_licence >> /etc/ambari-server/conf/ambari.properties
+        cat ${ambari_licence_dir}'/'license >> /etc/ambari-server/conf/ambari.properties
 fi
 
 ambari-server start
