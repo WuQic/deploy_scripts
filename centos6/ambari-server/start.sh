@@ -35,11 +35,10 @@ skip_hadoop=""
 skip_kafka=""
 
 #校验license是否存在
-ambari_licence=`cat licence`
-licence_length=`expr length $ambari_licence`
-echo $licence_length
-if [ $licence_length -eq 15 ];then
-        echo "licence is not exist...please check it and retry..."
+ambari_license=`cat license`
+license_length=`expr length $ambari_license`
+if [ $license_length -eq 15 ];then
+        echo "license is not exist...please check it and retry..."
         exit 1        
 fi
 

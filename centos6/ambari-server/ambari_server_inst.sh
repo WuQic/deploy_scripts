@@ -2,7 +2,7 @@
 
 http_port=`cat /etc/httpd/conf/httpd.conf |grep "Listen " |grep -v "#" |awk '{print $2}'`
 baseurl=$1
-ambari_licence_dir=$(cd "$(dirname "$0")";pwd)
+ambari_license_dir=$(cd "$(dirname "$0")";pwd)
 
 cd /etc/yum.repos.d
 rm ambari.repo
@@ -29,8 +29,8 @@ EOF
 
 res=`grep 'ambari_license' /etc/ambari-server/conf/ambari.properties`
 if [ "$res" = "" ];then
-        echo "ambari_licence dir:"$ambari_licence_dir
-        cat ${ambari_licence_dir}'/'license >> /etc/ambari-server/conf/ambari.properties
+        echo "ambari_license dir:"$ambari_license_dir
+        cat ${ambari_license_dir}'/'license >> /etc/ambari-server/conf/ambari.properties
 fi
 
 ambari-server start
