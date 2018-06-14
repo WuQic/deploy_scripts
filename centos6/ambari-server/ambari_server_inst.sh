@@ -2,6 +2,8 @@
 
 http_port=`cat /etc/httpd/conf/httpd.conf |grep "Listen " |grep -v "#" |awk '{print $2}'`
 baseurl=$1
+ambari_license_dir=$(cd "$(dirname "$0")";pwd)
+
 cd /etc/yum.repos.d
 rm ambari.repo
 wget $baseurl/AMBARI-2.2.2.0/centos6/2.2.2.0-0/ambari.repo
@@ -23,5 +25,11 @@ expect {
         }}}}
         expect "*]#*"
 EOF
+
+res=`grep 'ambari_license' /etc/ambari-server/conf/ambari.properties`
+if [ "$res" = "" ];then
+        echo "ambari_license dir:"$ambari_license_dir
+        cat ${ambari_license_dir}'/'license >> /etc/ambari-server/conf/ambari.properties
+fi
 
 ambari-server start

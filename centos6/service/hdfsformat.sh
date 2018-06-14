@@ -1,16 +1,17 @@
 #!/bin/bash
-
+##TODO 
 
 pw1=$1
 server_IP=$2
 cluster_name=$3
+hdfs_user=$4
 
 namenode1=`cat ../ambari-agent/host | sed -n "1p" |awk '{print $2}'`
 namenode2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
 pw2=`cat ../ambari-server/ip.txt | grep $namenode2 |awk '{print $2}'`
 
 #配置namenode的hdfs用户之间的免密码登录
-./passwdless.sh $namenode1 $pw1 $namenode2 $pw2
+#./passwdless.sh $namenode1 $pw1 $namenode2 $pw2
 
 #格式化namenode
 #1.格式化zkfc并启动namenode1节点的zkfc
@@ -25,7 +26,7 @@ spawn ssh $namenode1
         "*]#*"
         }
             expect "*]#*"
-        send "su - hdfs\n"
+        send "su - ${hdfs_user}\n"
             expect "*]\$*"
         send "hdfs zkfc -formatZK -nonInteractive\n"
             expect "*]\$*"
@@ -45,7 +46,7 @@ spawn ssh $namenode2
                 "*]#*" 
         }
             expect "*]#*"
-        send "su - hdfs\n"
+        send "su - ${hdfs_user}\n"
             expect "*]\$*"
         send "/opt/apps/hadoop_sugo/sbin/hadoop-daemon.sh --script /opt/apps/hadoop_sugo/bin/hdfs start zkfc\n"
             expect "*]\$*"
@@ -63,7 +64,7 @@ spawn ssh $namenode1
                 "*]#*" 
         }
             expect "*]#*"
-        send "su - hdfs\n"
+        send "su - ${hdfs_user}\n"
             expect "*]\$*"
         send "hdfs namenode -format\n"
             expect "*~]\$*"
@@ -85,7 +86,7 @@ spawn ssh $namenode2
                 "*]#*" 
         }
             expect "*]#*"
-        send "su - hdfs\n"
+        send "su - ${hdfs_user}\n"
             expect "*]\$*"
         send "hdfs namenode -bootstrapStandby\n"
             expect "*~]\$*"

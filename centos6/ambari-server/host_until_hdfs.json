@@ -7,21 +7,6 @@
     }
   },
   {
-    "AMBARI_METRICS": {
-      "METRICS_COLLECTOR": [
-        "test1.sugo.vm"
-      ],
-      "METRICS_MONITOR": [
-        "test1.sugo.vm",
-        "test2.sugo.vm",
-        "test3.sugo.vm"
-      ],
-      "METRICS_GRAFANA": [
-        "test1.sugo.vm"
-      ]
-    }
-  },
-  {
     "REDIS_SUGO": {
       "SUGO_REDIS_SERVER": [
         "test1.sugo.vm"

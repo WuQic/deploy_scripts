@@ -20,25 +20,36 @@ hn=`echo $line|awk '{print $1}'`
 pw=`echo $line|awk '{print $2}'`
 local_hn=`hostname`
 
+if [ "$hn" == "$local_hn" ];then
+/usr/bin/expect <<-EOF
+set timeout 100000
+spawn ssh $hn
+        expect {
+                "*yes/no*" { send "yes\n";exp_continue}
+                "*assword*" { send "${pw}\n";exp_continue}
+                "*]#*" { send "exit\n"}
+        }
+EOF
+fi
+
 if [ "$hn" != "$local_hn" ];then
 /usr/bin/expect <<-EOF
 set timeout 100000
 spawn ssh $hn
         expect {
-        "*yes/no*" { send "yes\n"
-        expect "*assword:" { send "$pw\n" } }
-        "*assword:" { send "$pw\n" }
-        "*]#*"
-        }
-                expect "*]#*"
-        send "wget $init_url/ssh.sh\n"
-                expect "*]#*" 
-        send "chmod 755 ssh.sh\n"
-                expect "*]#*" 
-        send "./ssh.sh $baseurl\n"
-                expect "*]#*" 
-        send "rm -rf ssh.sh*\n"
-                expect "*]#*"
+		"*yes/no*" { send "yes\n";exp_continue}
+		"*assword*" { send "${pw}\n"}
+	}
+        expect "*]#*"
+                send "wget $init_url/ssh.sh\n"
+        expect "*]#*" 
+                send "chmod 755 ssh.sh\n"
+        expect "*]#*" 
+                send "./ssh.sh $baseurl\n"
+        expect "*]#*" 
+                send "rm -rf ssh.sh*\n"
+        expect "*]#*"
+                send "exit\n"
 EOF
 fi
 done

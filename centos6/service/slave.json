@@ -2,47 +2,6 @@
   "items" : [
     {
       "ServiceComponentInfo" : {
-        "component_name" : "METRICS_MONITOR",
-        "service_name" : "AMBARI_METRICS"
-      },
-      "host_components" : [
-        {
-          "HostRoles" : {
-            "component_name" : "METRICS_MONITOR",
-            "desired_admin_state" : "INSERVICE",
-            "display_name" : "Metrics Monitor",
-            "host_name" : "test01.sugo.vm",
-            "maintenance_state" : "OFF",
-            "stale_configs" : false,
-            "state" : "STARTED"
-          }
-        },
-        {
-          "HostRoles" : {
-            "component_name" : "METRICS_MONITOR",
-            "desired_admin_state" : "INSERVICE",
-            "display_name" : "Metrics Monitor",
-            "host_name" : "test02.sugo.vm",
-            "maintenance_state" : "OFF",
-            "stale_configs" : false,
-            "state" : "STARTED"
-          }
-        },
-        {
-          "HostRoles" : {
-            "component_name" : "METRICS_MONITOR",
-            "desired_admin_state" : "INSERVICE",
-            "display_name" : "Metrics Monitor",
-            "host_name" : "test03.sugo.vm",
-            "maintenance_state" : "OFF",
-            "stale_configs" : false,
-            "state" : "STARTED"
-          }
-        }
-      ]
-    },
-    {
-      "ServiceComponentInfo" : {
         "component_name" : "SUGO_DATANODE",
         "service_name" : "HDFS_SUGO"
       },

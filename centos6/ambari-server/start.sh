@@ -22,6 +22,7 @@ function print_usage(){
 http_port=81
 ambari_ip=""
 cluster_name="sugo_cluster"
+ambari_user="ambari"
 
 skip_ambari=""
 csv=""
@@ -31,6 +32,13 @@ skip_createdir=0
 skip_ssh=0
 skip_jdk=0
 skip_cluster_services=0
+
+ambari_license=`cat license`
+license_length=`expr length $ambari_license`
+if [ $license_length -eq 15 ];then
+        echo "license is not exist...please check it and retry..."
+        exit 1        
+fi
 
 while read line
 do
@@ -162,6 +170,8 @@ if [ $skip_jdk -eq 0 ]
     echo "~~~~~~~~~~~jdk install skipped~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
 
+../xingye/ssh_without_passwod.sh $ambari_user
+
 #判断ambari-server是否已经安装，如果没有则安装
 if [ "$skip_ambari" = "" ];then
   ambari_server_dir="/var/lib/ambari-server"
@@ -191,9 +201,9 @@ if [ $skip_cluster_services -eq 0 ]
     echo `pwd`
     echo "http_port:$http_port, server_ip:$ambari_ip, cluster_name:$cluster_name, serverpassword:$server_password, baseurl:$baseurl"
     if [ "$csv" = "" ];then
-        source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password
+        source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password -ambari_user $ambari_user
     else
-        source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password -csv
+        source install.sh -http_port $http_port -server_IP $ambari_ip -cluster_name $cluster_name -server_password $server_password -ambari_user $ambari_user -csv
     fi
     cd -
 fi

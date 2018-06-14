@@ -13,8 +13,6 @@ curl -u admin:admin -H "X-Requested-By: ambari" -X DELETE  http://$server_IP:808
 
 curl -u admin:admin -H "X-Requested-By: ambari" -X DELETE  http://$server_IP:8080/api/v1/clusters/$cluster_name/services/POSTGRES_SUGO > /dev/null 2>&1
 
-curl -u admin:admin -H "X-Requested-By: ambari" -X DELETE  http://$server_IP:8080/api/v1/clusters/$cluster_name/services/AMBARI_METRICS > /dev/null 2>&1
-
 #创建集群
 curl -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{"Clusters": {"version" : "SG-1.0"}}' http://$server_IP:8080/api/v1/clusters/$cluster_name
 
@@ -66,6 +64,6 @@ curl -u admin:admin -H "X-Requested-By: ambari" -X POST -d '{
 curl -u admin:admin -H "X-Requested-By: ambari" -X PUT -d ' {"Clusters":{"provisioning_state":"INSTALLED"}}'  http://$server_IP:8080/api/v1/clusters/$cluster_name
 
 #应用配置（cluster-env）
-curl -u admin:admin -H "X-Requested-By: ambari" -i -X POST -d '{"type": "cluster-env", "tag": "version2", "properties" : {"security_enabled": "false", "managed_hdfs_resource_property_names": "", "override_uid": "true", "ignore_groupsusers_create": "false", "smokeuser_keytab": "/etc/security/keytabs/smokeuser.headless.keytab", "kerberos_domain": "EXAMPLE.COM", "fetch_nonlocal_groups": "true", "repo_suse_rhel_template": "[{{repo_id}}]\nname={{repo_id}}\n{% if mirror_list %}mirrorlist={{mirror_list}}{% else %}baseurl={{base_url}}{% endif %}\n\npath=/\nenabled=1\ngpgcheck=0", "user_group": "hadoop", "smokeuser": "ambari-qa", "repo_ubuntu_template": "{{package_type}} {{base_url}} {{components}}"}}' http://$server_IP:8080/api/v1/clusters/$cluster_name/configurations
+curl -u admin:admin -H "X-Requested-By: ambari" -i -X POST -d '{"type": "cluster-env", "tag": "version2", "properties" : {"security_enabled": "false", "managed_hdfs_resource_property_names": "", "override_uid": "true", "ignore_groupsusers_create": "false", "smokeuser_keytab": "/etc/security/keytabs/smokeuser.headless.keytab", "kerberos_domain": "EXAMPLE.COM", "fetch_nonlocal_groups": "true", "repo_suse_rhel_template": "[{{repo_id}}]\nname={{repo_id}}\n{% if mirror_list %}mirrorlist={{mirror_list}}{% else %}baseurl={{base_url}}{% endif %}\n\npath=/\nenabled=1\ngpgcheck=0", "user_group": "hadoop", "smokeuser": "ambari-qa", "repo_ubuntu_template": "{{package_type}} {{base_url}} {{components}}", "ambari_user_group" : "ambari", "ambari_user_name" : "ambari"}}' http://$server_IP:8080/api/v1/clusters/$cluster_name/configurations
 
 curl -u admin:admin -H "X-Requested-By: ambari" -i -X PUT -d '{ "Clusters" : {"desired_configs": {"type": "cluster-env", "tag" : "version2" }}}'  http://$server_IP:8080/api/v1/clusters/$cluster_name

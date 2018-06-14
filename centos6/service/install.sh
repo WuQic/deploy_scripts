@@ -17,6 +17,7 @@ server_IP=""
 cluster_name=""
 server_password=""
 csv=""
+ambari_user=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -25,6 +26,7 @@ while [[ $# -gt 0 ]]; do
        -server_IP) server_IP=$2 && shift 2;;
        -cluster_name) cluster_name=$2 && shift 2;;
        -server_password) server_password=$2 && shift 2;;
+       -ambari_user) ambari_user=$2 && shift 2;;
        -csv) csv=1 && shift ;;
     esac
 done
@@ -172,6 +174,7 @@ echo ""
 ./install_cluster.sh $http_port $server_IP $cluster_name
 sleep 5
 
+
 #重启ambari
 #ambari-server restart
 
@@ -218,7 +221,7 @@ sleep 15
       # hdfs初始化
       echo "formating hdfs~~~"
       #创建pg数据库并格式化hdfs
-      ./hdfsformat.sh $server_password $server_IP $cluster_name
+      ./hdfsformat.sh $server_password $server_IP $cluster_name $ambari_user
       break
     else
       sleep 5

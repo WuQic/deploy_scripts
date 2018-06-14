@@ -1,0 +1,23 @@
+{ 
+    "Clusters" : {
+      "desired_configs" : { 
+        "type" : "cluster-env", 
+        "tag" : "version2", 
+        "properties" : {
+          "fetch_nonlocal_groups" : "true",
+          "ignore_groupsusers_create" : "false",
+          "kerberos_domain" : "EXAMPLE.COM",
+          "managed_hdfs_resource_property_names" : "",
+          "override_uid" : "true",
+          "repo_suse_rhel_template" : "[{{repo_id}}]\nname={{repo_id}}\n{% if mirror_list %}mirrorlist={{mirror_list}}{% else %}baseurl={{base_url}}{% endif %}\n\npath=/\nenabled=1\ngpgcheck=0",
+          "repo_ubuntu_template" : "{{package_type}} {{base_url}} {{components}}",
+          "security_enabled" : "false",
+          "smokeuser" : "ambari-qa",
+          "smokeuser_keytab" : "/etc/security/keytabs/smokeuser.headless.keytab",
+          "user_group" : "hadoop",
+          "ambari_user_name" : "ambari",
+          "ambari_user_group" : "ambari"
+          }
+       }
+    }
+}
