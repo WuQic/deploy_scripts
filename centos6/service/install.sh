@@ -148,6 +148,7 @@ sed -i "s/host4/${hive_jdbc_host}/g" changed_configuration/astro-site.xml
 sed -i "s/host1/${postgres_host}/g" changed_configuration/common.runtime.xml
 sed -i "s/host1/${postgres_host}/g" changed_configuration/uindex-common.runtime.xml
 sed -i "s/host1/${hmaster_host}/g" changed_configuration/sugo-hive-site.xml
+sed -i "s/host1/${postgres_host}/g" changed_configuration/sugo-hivemetastore-site.xml
 cd -
 
 #判断httpd服务是否已启动
