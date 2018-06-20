@@ -5,7 +5,7 @@
   <property require-input="true">
     <name>druid.metadata.storage.connector.connectURI</name>
     <description>e.g: jdbc:postgresql://dev7.sugo.net:5432/druid</description>
-    <value>jdbc:postgresql://test1.sugo.vm:15432/druid</value>
+    <value>jdbc:postgresql://host1:15432/druid</value>
   </property>
   <property>
     <name>druid.license.signature</name>

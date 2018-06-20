@@ -105,17 +105,26 @@ if [ "$csv" = "" ];then
   cluster_host2=`cat ../ambari-agent/host | sed -n "2p" |awk '{print $2}'`
   cluster_host3=`cat ../ambari-agent/host | sed -n "3p" |awk '{print $2}'`
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_until_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_until_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_until_hdfs.json
+  sed -i "s/host1/${cluster_host1}/g" host_until_hdfs.json
+  sed -i "s/host2/${cluster_host2}/g" host_until_hdfs.json
+  sed -i "s/host3/${cluster_host3}/g" host_until_hdfs.json
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_after_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_after_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_after_hdfs.json
+  sed -i "s/host1/${cluster_host1}/g" host_after_hdfs.json
+  sed -i "s/host2/${cluster_host2}/g" host_after_hdfs.json
+  sed -i "s/host3/${cluster_host3}/g" host_after_hdfs.json
 
-  sed -i "s/test1.sugo.vm/${cluster_host1}/g" host_hdfs.json
-  sed -i "s/test2.sugo.vm/${cluster_host2}/g" host_hdfs.json
-  sed -i "s/test3.sugo.vm/${cluster_host3}/g" host_hdfs.json
+  sed -i "s/host1/${cluster_host1}/g" host_hdfs.json
+  sed -i "s/host2/${cluster_host2}/g" host_hdfs.json
+  sed -i "s/host3/${cluster_host3}/g" host_hdfs.json
+
+  sed -i "s/host1/${cluster_host1}/g" host_hive.json
+  sed -i "s/host2/${cluster_host2}/g" host_hive.json
+  sed -i "s/host3/${cluster_host3}/g" host_hive.json
+
+  sed -i "s/host1/${cluster_host1}/g" host_after_hive.json
+  sed -i "s/host2/${cluster_host2}/g" host_after_hive.json
+  sed -i "s/host3/${cluster_host3}/g" host_after_hive.json
+
 fi
 
 #获取namenode及astro所在主机并替换astro和druid的配置项
@@ -123,21 +132,26 @@ cd ../service/
 rm -rf namenode_astro_host.txt
 python get_host.py host_until_hdfs.json namenode_astro_host.txt
 python get_host.py host_after_hdfs.json namenode_astro_host.txt
+python get_host.py host_hive.json namenode_astro_host.txt
 
 namenode1=`cat namenode_astro_host.txt | grep "namenode1" | awk '{print $2}'`
 namenode2=`cat namenode_astro_host.txt | grep "namenode2" | awk '{print $2}'`
 astro_host=`cat namenode_astro_host.txt | grep "astro_host" | awk '{print $2}'`
-redis_host=`cat namenode_astro_host.txt | grep "redis_host" | awk '{print $2}'`
+#redis_host=`cat namenode_astro_host.txt | grep "redis_host" | awk '{print $2}'`
+hive_jdbc_host=`cat namenode_astro_host.txt | grep "hive_jdbc_host" | awk '{print $2}'`
 postgres_host=`cat namenode_astro_host.txt | grep "postgres_host" | awk '{print $2}'`
 gateway_host=`cat namenode_astro_host.txt | grep "gateway_host" | awk '{print $2}'`
+hmaster_host=`cat namenode_astro_host.txt | grep "hmaster_host" | awk '{print $2}'`
 
 rm -rf changed_configuration
 cp -r changed_configurations changed_configuration
-sed -i "s/test1.sugo.vm/${astro_host}/g" changed_configuration/astro-site.xml
-sed -i "s/test2.sugo.vm/${gateway_host}/g" changed_configuration/astro-site.xml
-sed -i "s/test3.sugo.vm/${postgres_host}/g" changed_configuration/astro-site.xml
-sed -i "s/test4.sugo.vm/${redis_host}/g" changed_configuration/astro-site.xml
-sed -i "s/test1.sugo.vm/${postgres_host}/g" changed_configuration/common.runtime.xml
+sed -i "s/host1/${astro_host}/g" changed_configuration/astro-site.xml
+sed -i "s/host2/${gateway_host}/g" changed_configuration/astro-site.xml
+sed -i "s/host3/${postgres_host}/g" changed_configuration/astro-site.xml
+sed -i "s/host4/${hive_jdbc_host}/g" changed_configuration/astro-site.xml
+sed -i "s/host1/${postgres_host}/g" changed_configuration/common.runtime.xml
+sed -i "s/host1/${postgres_host}/g" changed_configuration/uindex-common.runtime.xml
+sed -i "s/host1/${hmaster_host}/g" changed_configuration/sugo-hive-site.xml
 cd -
 
 #判断httpd服务是否已启动
@@ -174,6 +188,8 @@ echo ""
 ./install_cluster.sh $http_port $server_IP $cluster_name
 sleep 5
 
+#停止ambari-server和ambari-agent，并迁移目录
+../xingye/ssh_change_permission.sh
 
 #重启ambari
 #ambari-server restart
@@ -241,6 +257,31 @@ sleep 15
 python install_service.py $server_IP $cluster_name host_after_hdfs.json
 sleep 10
 
+#TODO  pg user
+ssh -tt $ambari_user@$postgres_host <<-EOF
+/opt/apps/postgres_sugo/bin/psql -p 15432 -U ambari -d postgres -c "CREATE DATABASE hive WITH OWNER = ambari ENCODING = UTF8;"
+/opt/apps/postgres_sugo/bin/psql -p 15432 -U ambari -d postgres -c "select datname from pg_database"
+hdfs dfs -mkdir -p /tmp/spark-events
+hdfs dfs -chmod 777 /tmp/spark-events
+hdfs dfs -mkdir -p /user/spark
+hdfs dfs -chmod 777 /user/spark
+hdfs dfs -chown -R spark:spark /user/spark
+hdfs dfs -mkdir -p /tmp/hive
+hdfs dfs -chmod 777 /tmp/hive
+hdfs dfs -chown -R hive:hadoop /tmp/hive
+hdfs dfs -mkdir -p /user/hive
+hdfs dfs -chmod 777 /user/hive
+hdfs dfs -chown -R hive:hadoop /user/hive
+EOF
+
+#安装spark和hive服务
+python install_service.py $server_IP $cluster_name host_hive.json
+sleep 10
+
+#安装完hive之后重新安装spark
+python install_service.py $server_IP $cluster_name host_after_hive.json
+sleep 10
+
 #判断astro是否已经安装完成
 /usr/bin/expect <<-EOF
 set timeout 100000
@@ -258,3 +299,4 @@ EOF
 
  #启剩余所有服务
 python start_service.py $server_IP $cluster_name host_after_hdfs.json
+python start_service.py $server_IP $cluster_name host_hive.json

@@ -11,7 +11,7 @@ services2=[]
 service1={}
 service2={}
 a=["POSTGRES_SUGO", "REDIS_SUGO", "ZOOKEEPER_SUGO", "HDFS_SUGO"]
-b=["YARN_SUGO", "MAPREDUCE_SUGO", "KAFKA_SUGO", "GATEWAY_SUGO", "DRUIDIO_SUGO", "ASTRO_SUGO"]
+b=["YARN_SUGO", "MAPREDUCE_SUGO", "KAFKA_SUGO", "GATEWAY_SUGO", "UINDEX_SUGO", "ASTRO_SUGO"]
 for line in lines:
     components={}
     server=line.split(",")[0]

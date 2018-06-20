@@ -2,87 +2,70 @@
   {
     "YARN_SUGO": {
       "SUGO_RESOURCEMANAGER": [
-        "test1.sugo.vm",
-        "test2.sugo.vm"
+        "host1",
+        "host2"
       ],
       "SUGO_NODEMANAGER": [
-        "test3.sugo.vm"
+        "host3"
       ],
       "SUGO_PROXYSERVER": [
-        "test3.sugo.vm"
+        "host3"
       ],
       "SUGO_YARN_CLIENT": [
-        "test1.sugo.vm",
-        "test2.sugo.vm",
-        "test3.sugo.vm"
+        "host1",
+        "host2",
+        "host3"
       ]
     }
   },
   {
     "MAPREDUCE_SUGO": {
       "SUGO_HISTORYSERVER": [
-        "test3.sugo.vm"
+        "host3"
       ],
       "SUGO_MAPREDUCE_CLIENT": [
-        "test3.sugo.vm"
+        "host3"
       ]
     }
   },
   { 
     "KAFKA_SUGO": {
       "SUGO_KAFKA_BROKER": [
-        "test1.sugo.vm",
-        "test2.sugo.vm",
-        "test3.sugo.vm"
+        "host1",
+        "host2",
+        "host3"
       ]
     }
   },
   {
-    "GATEWAY_SUGO": {
-      "SUGO_GATEWAY_SERVER": [
-        "test1.sugo.vm"
+    "UINDEX_SUGO": {
+      "SUGO_UINDEX_BROKER": [
+        "host1"
       ],
-	  "SUGO_GATEWAY_CLIENT": [
-        "test1.sugo.vm"
-      ]
-    }
-  },
-  {
-    "DRUIDIO_SUGO": {
-      "SUGO_DRUID_HISTORICAL": [
-        "test2.sugo.vm",
-        "test3.sugo.vm"
+      "SUGO_UINDEX_HMASTER": [
+        "host3"
       ],
-      "SUGO_DRUID_BROKER": [
-        "test1.sugo.vm",
-        "test2.sugo.vm"
+      "SUGO_UINDEX_HREGIONSERVER": [
+        "host2",
+        "host3"
       ],
-      "SUGO_DRUID_COORDINATOR": [
-        "test1.sugo.vm",
-        "test2.sugo.vm"
+      "SUGO_UINDEX_HPROXY": [
+        "host3"
       ],
-      "SUGO_DRUID_OVERLORD": [
-        "test1.sugo.vm",
-        "test2.sugo.vm"
-      ],
-      "SUGO_DRUID_MIDDLE_MANAGER": [
-        "test1.sugo.vm",
-        "test2.sugo.vm"
-      ],
-      "SUGO_DRUID_CLIENT": [
-        "test1.sugo.vm",
-        "test2.sugo.vm",
-        "test3.sugo.vm"
+      "SUGO_UINDEX_CLIENT": [
+        "host1",
+        "host2",
+        "host3"
       ]
     }
   },
   {
     "ASTRO_SUGO": {
       "SUGO_ANALYSE_UI": [
-        "test1.sugo.vm"
+        "host1"
       ],
       "SUGO_ANALYSE_CLIENT": [
-        "test1.sugo.vm"
+        "host1"
       ]
     }
   }

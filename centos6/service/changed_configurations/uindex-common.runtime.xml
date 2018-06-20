@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property>
+    <name>druid.license.signature</name>
+    <description>产品密钥，请联系sugo.io获取</description>
+    <value>contact sugo to get the license</value>
+  </property>
+
+  <property>
+    <name>druid.metadata.storage.connector.connectURI</name>
+    <description>e.g: jdbc:postgresql://dev7.sugo.net:5432/druid</description>
+    <value>jdbc:postgresql://host1:15432/uindex</value>
+  </property>
+</configuration>

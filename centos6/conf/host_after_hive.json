@@ -1,0 +1,12 @@
+[
+  {
+    "SPARK_SUGO": {
+      "SUGO_SPARK_JOBHISTORYSERVER": [
+        "host2"
+      ],
+      "SPARK_THRIFTSERVER": [
+        "host2"
+      ]
+    }
+  }
+]

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pg_user="ambari"
+
 #创建druid、sugo_astro/pio库
 postgres_path="/opt/apps/postgres_sugo"
 if [ -d "$postgres_path" ];
@@ -12,9 +14,10 @@ postgres_pid=`head -1 /data1/postgres/data/postmaster.pid`
     fi
 
 cd /opt/apps/postgres_sugo
-bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE druid WITH OWNER = postgres ENCODING = UTF8;"
-bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE sugo_astro WITH OWNER = postgres ENCODING = UTF8;"
-bin/psql -p 15432 -U postgres -d postgres -c "CREATE DATABASE pio WITH OWNER = postgres ENCODING = UTF8;"
+bin/psql -p 15432 -U $pg_user -d postgres -c "CREATE DATABASE druid WITH OWNER = $pg_user ENCODING = UTF8;"
+bin/psql -p 15432 -U $pg_user -d postgres -c "CREATE DATABASE sugo_astro WITH OWNER = $pg_user ENCODING = UTF8;"
+bin/psql -p 15432 -U $pg_user -d postgres -c "CREATE DATABASE pio WITH OWNER = $pg_user ENCODING = UTF8;"
+bin/psql -p 15432 -U $pg_user -d postgres -c "CREATE DATABASE uindex WITH OWNER = $pg_user ENCODING = UTF8;"
 cd -
 fi
 
