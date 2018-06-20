@@ -257,10 +257,10 @@ sleep 15
 python install_service.py $server_IP $cluster_name host_after_hdfs.json
 sleep 10
 
-#TODO  pg user
+#建表
 ssh -tt $ambari_user@$postgres_host <<-EOF
-/opt/apps/postgres_sugo/bin/psql -p 15432 -U ambari -d postgres -c "CREATE DATABASE hive WITH OWNER = ambari ENCODING = UTF8;"
-/opt/apps/postgres_sugo/bin/psql -p 15432 -U ambari -d postgres -c "select datname from pg_database"
+/opt/apps/postgres_sugo/bin/psql -p 15432 -U $ambari_user -d postgres -c "CREATE DATABASE hive WITH OWNER = ambari ENCODING = UTF8;"
+/opt/apps/postgres_sugo/bin/psql -p 15432 -U $ambari_user -d postgres -c "select datname from pg_database"
 hdfs dfs -mkdir -p /tmp/spark-events
 hdfs dfs -chmod 777 /tmp/spark-events
 hdfs dfs -mkdir -p /user/spark
