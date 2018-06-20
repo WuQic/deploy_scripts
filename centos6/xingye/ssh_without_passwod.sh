@@ -7,6 +7,8 @@ pw="123456"
 
 declare -a iparray
 
+loacl_ip=`/sbin/ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
+
 while read line;
 do
 	ip=`echo  $line | awk '{print $1}'`
@@ -16,13 +18,20 @@ done < ../ambari-server/host
 echo "length : ${#iparray[@]}"
 
 for ip in ${iparray[@]}; do
-	ssh -tt root@${ip} <<-EOF
-	echo "add user $user"
-	adduser $user
-	echo -ne "${pw}\n${pw}\n" | passwd $user
-	su $user -c 'ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa'
-	exit
+	if [[ $loacl_ip == $ip ]];then
+		echo "add user $user"
+		adduser $user
+		echo -ne "${pw}\n${pw}\n" | passwd $user
+		su $user -c 'ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa'
+	else
+		ssh -tt root@$ip <<-EOF
+		echo "add user $user"
+		adduser $user
+		echo -ne "${pw}\n${pw}\n" | passwd $user
+		su $user -c 'ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa'
+		exit
 EOF
+	fi
 done
 
 
@@ -36,11 +45,16 @@ for ip in ${iparray[@]}; do
 		"*]#*" { send "exit\n"}
 	}
 EOF
-	ssh -tt root@${ip} <<-EOF
-	yum install -y expect
-	su $user -c 'sh /tmp/ssh_copy.sh "${iparray[*]}" $pw' 
-	exit	
+	if [[ $loacl_ip == $ip ]];then
+		yum install -y expect
+		su $user -c 'sh /tmp/ssh_copy.sh "${iparray[*]}" $pw'
+	else 
+		ssh -tt root@$ip <<-EOF
+		yum install -y expect
+		su $user -c 'sh /tmp/ssh_copy.sh "${iparray[*]}" $pw' 
+		exit
 EOF
+	fi
 done
 
 cd -

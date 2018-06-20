@@ -121,10 +121,6 @@ if [ "$csv" = "" ];then
   sed -i "s/host2/${cluster_host2}/g" host_hive.json
   sed -i "s/host3/${cluster_host3}/g" host_hive.json
 
-  sed -i "s/host1/${cluster_host1}/g" host_after_hive.json
-  sed -i "s/host2/${cluster_host2}/g" host_after_hive.json
-  sed -i "s/host3/${cluster_host3}/g" host_after_hive.json
-
 fi
 
 #获取namenode及astro所在主机并替换astro和druid的配置项
@@ -258,29 +254,13 @@ python install_service.py $server_IP $cluster_name host_after_hdfs.json
 sleep 10
 
 #建表
-ssh -tt $ambari_user@$postgres_host <<-EOF
-/opt/apps/postgres_sugo/bin/psql -p 15432 -U $ambari_user -d postgres -c "CREATE DATABASE hive WITH OWNER = ambari ENCODING = UTF8;"
-/opt/apps/postgres_sugo/bin/psql -p 15432 -U $ambari_user -d postgres -c "select datname from pg_database"
-hdfs dfs -mkdir -p /tmp/spark-events
-hdfs dfs -chmod 777 /tmp/spark-events
-hdfs dfs -mkdir -p /user/spark
-hdfs dfs -chmod 777 /user/spark
-hdfs dfs -chown -R spark:spark /user/spark
-hdfs dfs -mkdir -p /tmp/hive
-hdfs dfs -chmod 777 /tmp/hive
-hdfs dfs -chown -R hive:hadoop /tmp/hive
-hdfs dfs -mkdir -p /user/hive
-hdfs dfs -chmod 777 /user/hive
-hdfs dfs -chown -R hive:hadoop /user/hive
-EOF
+../xingye/create_hive_spark_table.sh $ambari_user
+
 
 #安装spark和hive服务
 python install_service.py $server_IP $cluster_name host_hive.json
 sleep 10
 
-#安装完hive之后重新安装spark
-python install_service.py $server_IP $cluster_name host_after_hive.json
-sleep 10
 
 #判断astro是否已经安装完成
 /usr/bin/expect <<-EOF

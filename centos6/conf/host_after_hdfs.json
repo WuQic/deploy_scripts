@@ -68,32 +68,5 @@
         "host1"
       ]
     }
-  },
-  {
-    "SPARK_SUGO": {
-      "SUGO_SPARK_JOBHISTORYSERVER": [
-        "host2"
-      ],
-      "SPARK_THRIFTSERVER": [
-        "host2"
-      ]
-    }
-  },
-  {
-    "HIVE_SUGO": {
-      "SUGO_HIVE_METASTORE": [
-        "host3"
-      ],
-      "SUGO_HIVE_SERVER": [
-        "host3"
-      ]
-    }
-  },
-  {
-    "HIVE_JDBC_SUGO": {
-      "HIVE_JDBC_SERVER": [
-        "host3"
-      ]
-    }
   }
 ]
