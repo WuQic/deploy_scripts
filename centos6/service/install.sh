@@ -255,7 +255,7 @@ python install_service.py $server_IP $cluster_name host_after_hdfs.json
 sleep 10
 
 #建表
-../xingye/create_hive_spark_table.sh $ambari_user
+../xingye/create_hive_spark_table.sh $ambari_user $postgres_host
 
 
 #安装spark和hive服务
