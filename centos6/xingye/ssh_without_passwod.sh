@@ -42,16 +42,20 @@ for ip in ${iparray[@]}; do
 	expect {
 		"*yes/no*" { send "yes\n";exp_continue}
 		"*assword*" { send "${pw}\n";exp_continue}
-		"*]#*" { send "exit\n"}
+		"*]#*" 
 	}
 EOF
+done
+
+for ip in ${iparray[@]}; do
+	echo ">>>>"$loacl_ip
+	echo "<<<<"$ip
 	if [[ $loacl_ip == $ip ]];then
-		yum install -y expect
-		su $user -c 'sh /tmp/ssh_copy.sh "${iparray[*]}" $pw'
+		su $user -c "sh /tmp/ssh_copy.sh '${iparray[*]}' $pw"
 	else 
 		ssh -tt root@$ip <<-EOF
 		yum install -y expect
-		su $user -c 'sh /tmp/ssh_copy.sh "${iparray[*]}" $pw' 
+		su $user -c "sh /tmp/ssh_copy.sh '${iparray[*]}' $pw"
 		exit
 EOF
 	fi

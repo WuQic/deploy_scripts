@@ -31,7 +31,11 @@ for service in json_array:
                 m = open(host_output, 'a+')
                 m.write("gateway_host " + component_value[0] + "\n")
                 m.close()
-           elif component_key == "HIVE_JDBC_SUGO":
+           elif component_key == "HIVE_JDBC_SERVER":
                 m=open(host_output, 'a+')
                 m.write("hive_jdbc_host " + component_value[0] + "\n")
+                m.close()
+            elif component_key == "SUGO_UINDEX_HMASTER":
+                m=open(host_output, 'a+')
+                m.write("hmaster_host " + component_value[0] + "\n")
                 m.close()

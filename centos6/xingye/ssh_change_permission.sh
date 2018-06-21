@@ -18,11 +18,11 @@ for ip in ${iparray[@]}; do
 	/usr/bin/expect <<-EOF
 	set timeout 100000
 	spawn scp change_permission.sh root@${ip}:/tmp/
-	spawn scp xingye-cli.sh root@${ip}:/tmp/
+	spawn scp tingyun-cli.sh root@${ip}:/tmp/
 	expect {
 		"*yes/no*" { send "yes\n";exp_continue}
 		"*assword*" { send "${pw}\n";exp_continue}
-		"*]#*" { send "exit\n"}
+		"*]#*"
 	}
 EOF
 	if [[ $loacl_ip == $ip ]];then
