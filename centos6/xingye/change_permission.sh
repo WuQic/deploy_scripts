@@ -39,6 +39,6 @@ su - ambari -c '/usr/sbin/ambari-agent start'
 tingyun='/usr/bin/tingyun'
 
 if [[ ! -f $tingyun ]];then
-    cat tingyun-cli.sh > $tingyun
+    cat /tmp/tingyun-cli.sh > $tingyun
     chmod 755 $tingyun
 fi
