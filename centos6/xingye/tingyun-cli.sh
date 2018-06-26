@@ -1,5 +1,12 @@
 #!/bin/bash -eu
 
+EXC_USER="ambari"
+result=$(echo `id |grep $EXC_USER`)
+if [[ $result == '' ]]; then 
+	echo "Can not execute by this user, please use user '$EXC_USER' and try again."
+	exit 1
+fi
+
 ambari_server='/usr/sbin/ambari-server'
 
 usage="Usage: tingyun [start|stop|restart|status] [all|server|agent] "

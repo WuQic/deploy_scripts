@@ -4,26 +4,26 @@
 <configuration>
     <property require-input="true">
         <name>site.websdk_app_host</name>
-        <value>host1:8000</value>
+        <value>astro_host:8000</value>
         <description>e.g: 192.168.0.120:8000</description>
     </property>
 
     <property require-input="true">
         <name>site.collectGateway</name>
-        <value>http://host2</value>
+        <value>http://gateway_host</value>
         <description>e.g: http://192.168.0.120</description>
     </property>
     
     <property require-input="true">
         <name>db.host</name>
-        <value>host3</value>
+        <value>postgres_host</value>
         <description>e.g: 192.168.0.120</description>
     </property>
 
     <property require-input="true">
         <name>hive.apiHost</name>
-        <value>host4:9001</value>
-        <description>e.g: 192.168.0.120:9001</description>
+        <value>http://hive_jdbc_host:9001</value>
+        <description>e.g: http://192.168.0.120:9001</description>
     </property>
 
     <property require-input="true">
@@ -67,6 +67,26 @@
         <value>听云</value>
         <description></description>
     </property>
+
+    <property require-input="true">
+        <name>uindex.hmaster</name>
+        <value>http://hmaster_host</value>
+        <description></description>
+    </property>
+
+    <property require-input="true">
+        <name>uindex.host</name>
+        <value>broker_host</value>
+        <description></description>
+    </property>
+
+    <property require-input="true">
+        <name>uindex.hproxy</name>
+        <value>http://hproxy_host</value>
+        <description></description>
+    </property>
+
+
 
 </configuration>
 

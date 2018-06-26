@@ -3,7 +3,7 @@
 <configuration>
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:postgresql://host1:15432/hive?createDatabaseIfNotExist=true</value>
+        <value>jdbc:postgresql://postgres_host:15432/hive?createDatabaseIfNotExist=true</value>
         <description>JDBC connect string for a JDBC metastore</description>
     </property>
 

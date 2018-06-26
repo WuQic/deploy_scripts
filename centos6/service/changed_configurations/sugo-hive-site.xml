@@ -4,7 +4,7 @@
 <configuration>
     <property require-input="true">
         <name>druid.hmaster.address.default</name>
-        <value>host1</value>
+        <value>hmaster_host:8086</value>
         <description></description>
     </property>
 

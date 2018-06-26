@@ -36,6 +36,9 @@ sed -i.bak 's/run_as_user\s*=\s*.*$/run_as_user=ambari/g' '/etc/ambari-agent/con
 
 su - ambari -c '/usr/sbin/ambari-agent start'
 
+tingyun='/usr/bin/tingyun'
 
-cat tingyun-cli.sh > /usr/bin/tingyun
-chmod 755 /usr/bin/tingyun
+if [[ ! -f $tingyun ]];then
+    cat tingyun-cli.sh > $tingyun
+    chmod 755 $tingyun
+fi

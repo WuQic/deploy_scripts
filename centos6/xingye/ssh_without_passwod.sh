@@ -12,7 +12,9 @@ loacl_ip=`/sbin/ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{prin
 while read line;
 do
 	ip=`echo  $line | awk '{print $1}'`
+	hn=`echo  $line | awk '{print $2}'`
 	iparray=("${iparray[@]}" "$ip")
+	hnarray=("${hnarray[@]}" "$hn")
 done < ../ambari-server/host
 
 echo "length : ${#iparray[@]}"
@@ -46,6 +48,7 @@ for ip in ${iparray[@]}; do
 	}
 EOF
 done
+
 
 for ip in ${iparray[@]}; do
 	echo ">>>>"$loacl_ip

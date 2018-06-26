@@ -141,14 +141,17 @@ hmaster_host=`cat namenode_astro_host.txt | grep "hmaster_host" | awk '{print $2
 
 rm -rf changed_configuration
 cp -r changed_configurations changed_configuration
-sed -i "s/host1/${astro_host}/g" changed_configuration/astro-site.xml
-sed -i "s/host2/${gateway_host}/g" changed_configuration/astro-site.xml
-sed -i "s/host3/${postgres_host}/g" changed_configuration/astro-site.xml
-sed -i "s/host4/${hive_jdbc_host}/g" changed_configuration/astro-site.xml
-sed -i "s/host1/${postgres_host}/g" changed_configuration/common.runtime.xml
-sed -i "s/host1/${postgres_host}/g" changed_configuration/uindex-common.runtime.xml
-sed -i "s/host1/${hmaster_host}/g" changed_configuration/sugo-hive-site.xml
-sed -i "s/host1/${postgres_host}/g" changed_configuration/sugo-hivemetastore-site.xml
+sed -i "s/astro_host/${astro_host}/g" changed_configuration/astro-site.xml
+sed -i "s/gateway_host/${gateway_host}/g" changed_configuration/astro-site.xml
+sed -i "s/postgres_host/${postgres_host}/g" changed_configuration/astro-site.xml
+sed -i "s/hive_jdbc_host/${hive_jdbc_host}/g" changed_configuration/astro-site.xml
+sed -i "s/hmaster_host/${hmaster_host}/g" changed_configuration/astro-site.xml
+sed -i "s/broker_host/${broker_host}/g" changed_configuration/astro-site.xml
+sed -i "s/hproxy_host/${hproxy_host}/g" changed_configuration/astro-site.xml
+sed -i "s/postgres_host/${postgres_host}/g" changed_configuration/common.runtime.xml
+sed -i "s/postgres_host/${postgres_host}/g" changed_configuration/uindex-common.runtime.xml
+sed -i "s/hmaster_host/${hmaster_host}/g" changed_configuration/sugo-hive-site.xml
+sed -i "s/postgres_host/${postgres_host}/g" changed_configuration/sugo-hivemetastore-site.xml
 cd -
 
 #判断httpd服务是否已启动
@@ -203,7 +206,7 @@ sleep 15
   do
     hdfs_dir="/opt/apps/hadoop_sugo"
     if [ ! -d "$hdfs_dir" ];then
-      sleep 2
+      sleep 30
     y=$[$y+1]
     if [ $y -lt 180 ];then
         printf "."

@@ -16,6 +16,9 @@
       ],
       "SUGO_HIVE_SERVER": [
         "host3"
+      ],
+      "SUGO_HIVE_CLIENT": [
+        "host3"
       ]
     }
   },

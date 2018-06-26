@@ -28,15 +28,6 @@
       ]
     }
   },
-  { 
-    "KAFKA_SUGO": {
-      "SUGO_KAFKA_BROKER": [
-        "host1",
-        "host2",
-        "host3"
-      ]
-    }
-  },
   {
     "UINDEX_SUGO": {
       "SUGO_UINDEX_BROKER": [
@@ -46,8 +37,8 @@
         "host3"
       ],
       "SUGO_UINDEX_HREGIONSERVER": [
-        "host2",
-        "host3"
+        "host1",
+        "host2"
       ],
       "SUGO_UINDEX_HPROXY": [
         "host3"

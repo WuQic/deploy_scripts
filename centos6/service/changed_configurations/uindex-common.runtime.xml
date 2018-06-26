@@ -11,6 +11,6 @@
   <property>
     <name>druid.metadata.storage.connector.connectURI</name>
     <description>e.g: jdbc:postgresql://dev7.sugo.net:5432/druid</description>
-    <value>jdbc:postgresql://host1:15432/uindex</value>
+    <value>jdbc:postgresql://postgres_host:15432/uindex</value>
   </property>
 </configuration>
