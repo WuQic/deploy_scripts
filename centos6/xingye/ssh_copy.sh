@@ -18,6 +18,7 @@ auto_ssh() {
         spawn ssh $1;
         expect {
             *(yes/no)* {send -- yes\r;exp_continue;}
+            *]*        {send -- exit\r;exp_continue;}
             eof        {exit 0;}
         }";
 }

@@ -206,7 +206,7 @@ sleep 15
   do
     hdfs_dir="/opt/apps/hadoop_sugo"
     if [ ! -d "$hdfs_dir" ];then
-      sleep 30
+      sleep 2
     y=$[$y+1]
     if [ $y -lt 180 ];then
         printf "."

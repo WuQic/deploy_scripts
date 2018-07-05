@@ -6,7 +6,7 @@ user=$1
 pw="123456"
 
 declare -a iparray
-
+declare -a hnarray
 loacl_ip=`/sbin/ifconfig -a|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
 
 while read line;
@@ -54,11 +54,11 @@ for ip in ${iparray[@]}; do
 	echo ">>>>"$loacl_ip
 	echo "<<<<"$ip
 	if [[ $loacl_ip == $ip ]];then
-		su $user -c "sh /tmp/ssh_copy.sh '${iparray[*]}' $pw"
+		su $user -c "sh /tmp/ssh_copy.sh '${iparray[*]}' '${hnarray[*]}' $pw"
 	else 
 		ssh -tt root@$ip <<-EOF
 		yum install -y expect
-		su $user -c "sh /tmp/ssh_copy.sh '${iparray[*]}' $pw"
+		su $user -c "sh /tmp/ssh_copy.sh '${iparray[*]}' '${hnarray[*]}' $pw"
 		exit
 EOF
 	fi
