@@ -7,9 +7,4 @@
     <description>e.g: jdbc:postgresql://dev7.sugo.net:5432/druid</description>
     <value>jdbc:postgresql://test1.sugo.vm:15432/druid</value>
   </property>
-  <property>
-    <name>druid.license.signature</name>
-    <description>产品密钥，请联系sugo.io获取</description>
-    <value>please contact sugo to get the license</value>
-  </property>
 </configuration>
