@@ -157,12 +157,12 @@ class AmbariService:
                 response = urllib2.urlopen(request, json.dumps(data6))
             except urllib2.HTTPError, err:
                 retry_times += 1
-                print "start " + service_name + " faild, retry[" + retry_times + "]"
+                print "start " + service_name + " faild, retry[" + bytes(retry_times) + "]..."
                 print err.code
                 response_code = err.code
                 time.sleep(3)
             else:
-                print "starting " + service_name
+                print "starting " + service_name + "..."
                 result = json.loads(response.read())
                 response_code = 200
             
