@@ -234,11 +234,11 @@ fi
 rm -rf ../service/host_*
 cd ../conf/
   if [ "$skip_hadoop" = "" ];then
-    python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+    python csv_json.py hosts.csv KAFKA_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
     cp hostbeforhdfs.json ../service/host_until_hdfs.json
     cp hostafterhdfs.json ../service/host_after_hdfs.json
     if [ "$skip_kafka" != "" ];then
-      python csv_json.py hosts.csv YARN_SUGO MAPREDUCE_SUGO GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
+      python csv_json.py hosts.csv GATEWAY_SUGO DRUIDIO_SUGO ASTRO_SUGO
       cp hostbeforhdfs.json ../service/host_until_hdfs.json
       cp hostafterhdfs.json ../service/host_after_hdfs.json
     fi
